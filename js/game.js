@@ -38,20 +38,52 @@ var update = function (modifier) {
 };
 
 // Draw everything
-function render() {
-    if (bgReady) {
-        ctx.drawImage(bgImage, 0, 0);
-    }
 
-    if (heroReady) {
-        ctx.drawImage(heroImage, hero.x, hero.y);
-    }
+var frame = 0;
+var lasttime = 0;
+var starttime = 0;
+
+function render() {
+	frame++;
+
+	var d = new Date();
+	var n = d.getTime(); 
+
+	var ltime = n - starttime;
+	var dtime = n - lasttime;
+	lasttime = n;
+
+	setTimeout( render, 16 );
+ 
+	canvas.width  = window.innerWidth;
+	canvas.height = window.innerHeight;
+ 
+	var background = document.getElementById("background");
+	var player =     document.getElementById("player");
+//	console.log( background );
+//	console.log( player );
+    ctx.drawImage(background, 0, 0);
+	var k;
+	for( k = 0; k < 300; k++ )
+	{
+	    ctx.drawImage(player,
+			Math.sin(ltime/100000.0*(k+100))*30+100 + (k % 30)*40,
+			Math.cos(ltime/100000.0*(k+100))*30+100 + (k / 30)*40 );
+	}
 };
 
 function gameload() {
     var img=document.getElementById("background");
+	var d = new Date();
+	starttime = d.getTime();
     ctx.drawImage(img,0,0);
+	setTimeout( render, 16 );
 };
+
+
+
+
+
 
 function response( req, data )
 {

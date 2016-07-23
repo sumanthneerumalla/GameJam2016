@@ -63,10 +63,6 @@ if __name__ == '__main__':
             'tools.websocket.on': True,
             'tools.websocket.handler_cls': ChatWebSocketHandler
             },
-        '/js': {
-              'tools.staticdir.on': True,
-              'tools.staticdir.dir': 'js'
-            }
         }
     )
 
