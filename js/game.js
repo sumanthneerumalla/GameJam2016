@@ -1,5 +1,5 @@
 // Create the canvas
-var canvas = document.createElement("canvas");
+var canvas = document.getElementById("myCanvas");
 canvas.width = 512;
 canvas.height = 512;
 document.body.appendChild(canvas);
@@ -17,3 +17,9 @@ addEventListener("keydown", function (e) {
 addEventListener("keyup", function (e) {
     delete keysDown[e.keyCode];
 }, false);
+
+// Game objects
+var player = {
+    speed: 100
+};
+
