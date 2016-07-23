@@ -27,6 +27,9 @@ addEventListener("keydown", function (e) {
 }, false);
 
 addEventListener("keyup", function (e) {
+	if (e.keyCode == 32){
+		player.speed = 100;
+	}
     delete keysDown[e.keyCode];
 }, false);
 
@@ -50,6 +53,9 @@ var update = function (modifier) {
     if (39 in keysDown) { // Player holding right
         player.x += player.speed * modifier;
     }
+    if (32 in keysDown){
+    	play.speed = 200;
+	}
 };
 
 // Draw everything
