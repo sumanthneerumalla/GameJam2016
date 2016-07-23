@@ -157,6 +157,11 @@ function gameload() {
 		doSend( '{"pid":"'+localStorage.pid+'"}' );
 	});
 
+	$('#RespawnButton').click(function(){
+		var GetRequest = { op:'respawn' };
+		QueueOperation( GetRequest, null );
+	});
+
 	starttime = d.getTime();
 	setTimeout( render, 16 );
 }
