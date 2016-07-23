@@ -19,6 +19,8 @@ TimeNow = 0.0
 LastTickTime = 0.0
 DeltaTime = 0.0
 TimeSinceStart = 0.0
+CanvasWidth = 1156
+CanvasHeight = 859
 
 def TickEvent():
     global StartTime, LastTickTime, AllPlayers
@@ -65,7 +67,9 @@ def GotWebsocketData( thing, data ):
             AllPlayers[dats['pid']] = AllPlayers[thing.pid]
             del AllPlayers[ thing.pid ];
         else:
-            AllPlayers[dats['pid']] = { 'x':5, 'y':5, 'dx':0, 'dy':0 }
+            xStart = random.randrange(0, CanvasWidth, 5)
+            yStart = random.randrange(0, CanvasHeight, 5)
+            AllPlayers[dats['pid']] = { 'x':xStart, 'y':yStart, 'dx':0, 'dy':0 }
 
         thing.pid = dats['pid']
         return

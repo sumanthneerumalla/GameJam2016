@@ -112,7 +112,6 @@ function render() {
 	{
 		var sp = AllSprites[localStorage.pid];
 		var iir = 0.02;
-		console.log( sp.cx );
 		if( sp.cx && sp.cy )
 		{
 			mapCenterX = sp.cx * iir + mapCenterX * (1.0-iir );
@@ -155,7 +154,6 @@ function gameload() {
 
 	$('#PlayerName').change(function(){
 		localStorage.pid = this.value;
-		console.log( this.value );
 		doSend( '{"pid":"'+localStorage.pid+'"}' );
 	});
 
