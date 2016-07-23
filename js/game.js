@@ -1,8 +1,8 @@
 // Create the canvas
-var canvas = document.getElementById("myCanvas");
+var canvas;
 
 // Grab a reference to the canvas 2D context
-var ctx = canvas.getContext("2d");
+var ctx;
 
 // Handle keyboard controls
 var keysDown = {};
@@ -73,10 +73,11 @@ function render() {
 };
 
 function gameload() {
-    var img=document.getElementById("background");
 	var d = new Date();
+	canvas = document.getElementById("myCanvas");
+	ctx = canvas.getContext("2d");
+
 	starttime = d.getTime();
-    ctx.drawImage(img,0,0);
 	setTimeout( render, 16 );
 };
 
