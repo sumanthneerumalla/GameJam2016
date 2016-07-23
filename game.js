@@ -6,7 +6,10 @@ function response( req, data )
 function CommsLoop()
 {
 	setTimeout( CommsLoop, 100 );
-	QueueOperation('query', response );
+
+	var MyObject = { x:5 };
+
+	QueueOperation(MyObject, response );
 }
 
 
