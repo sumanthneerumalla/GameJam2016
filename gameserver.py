@@ -10,11 +10,10 @@ from ws4py.server.cherrypyserver import WebSocketPlugin, WebSocketTool
 from ws4py.websocket import WebSocket
 from ws4py.messaging import TextMessage
 
-import localgame
+from localgame import *
 
 class ChatWebSocketHandler(WebSocket):
     def received_message(self, m):
-        print m
         GotWebsocketData( self, m )
 
     def closed(self, code, reason="A client left the room without a proper explanation."):
