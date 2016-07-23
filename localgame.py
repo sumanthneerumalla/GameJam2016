@@ -83,7 +83,7 @@ def GotWebsocketData( thing, data ):
     if dats['op'] == 'getall':
        thing.send( json.dumps( AllPlayers ) );
        return;
-    if dats['op'] == 'makeMove':
+    elif dats['op'] == 'makeMove':
         #calculate new location of the players move
         ourPlayer = dats['p']
         ourPlayer['x'] = ourPlayer['x'] + ourPlayer['dx']
@@ -93,6 +93,10 @@ def GotWebsocketData( thing, data ):
         AllPlayers[thing.pid]['dx'] = ourPlayer['dx']
         AllPlayers[thing.pid]['dy'] = ourPlayer['dy']
         print "move made"
+    elif dats['op'] == 'respawn':
+        xStart = random.randrange(0, CanvasWidth, 1)
+        yStart = random.randrange(0, CanvasHeight, 1)
+        AllPlayers[dats['pid']] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0}
 
 
     #print "You are: " + thing.pid
