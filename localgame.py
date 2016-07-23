@@ -28,20 +28,30 @@ def TickEvent():
     LastTickTime = TimeNow
     TimeSinceStart = TimeNow - StartTime
 
-    TestSprite = {}
-    TestSprite['x'] = math.sin( TimeSinceStart ) * 200 + 200;
-    TestSprite['y'] = math.cos( TimeSinceStart ) * 200 + 200;
-    TestSprite['dx'] = math.cos( TimeSinceStart );
-    TestSprite['dy'] = math.sin( TimeSinceStart );
-    TestSprite['sprite'] = 'Lig';
-    AllPlayers['testsprite'] = TestSprite
+    # TestSprite = {}
+    # TestSprite['x'] = math.sin( TimeSinceStart ) * 200 + 200;
+    # TestSprite['y'] = math.cos( TimeSinceStart ) * 200 + 200;
+    # TestSprite['dx'] = math.cos( TimeSinceStart );
+    # TestSprite['dy'] = math.sin( TimeSinceStart );
+    # TestSprite['sprite'] = 'Lig';
+    # AllPlayers['testsprite'] = TestSprite
+    UpdateAllPlayers(AllPlayers, DeltaTime)
 
 def StartGame():
     global StartTime, LastTickTime
     StartTime = time.time()
     LastTickTime = StartTime
     TickEvent()
-	
+
+def UpdateAllPlayers(AllPlayers, DeltaTime):
+    for eachPlayer in AllPlayers:
+        # print AllPlayers[eachPlayer]
+        AllPlayers[eachPlayer]['x'] = AllPlayers[eachPlayer]['x'] + AllPlayers[eachPlayer]['dx'] * DeltaTime
+        print "distance to move in x is: ", AllPlayers[eachPlayer]['dx'] * DeltaTime
+        print "x location is : ", AllPlayers[eachPlayer]['x']
+        AllPlayers[eachPlayer]['y'] = AllPlayers[eachPlayer]['y'] + AllPlayers[eachPlayer]['dy'] * DeltaTime
+        print "distance to move in y is: ", AllPlayers[eachPlayer]['dy'] * DeltaTime
+        print "y location is : ", AllPlayers[eachPlayer]['y']
 
 def GotWebsocketData( thing, data ):
     global AllPlayers
@@ -55,7 +65,7 @@ def GotWebsocketData( thing, data ):
             AllPlayers[dats['pid']] = AllPlayers[thing.pid]
             del AllPlayers[ thing.pid ];
         else:
-            AllPlayers[dats['pid']] = { 'x':5, 'y':5 }
+            AllPlayers[dats['pid']] = { 'x':5, 'y':5, 'dx':0, 'dy':0 }
 
         thing.pid = dats['pid']
         return
@@ -69,6 +79,16 @@ def GotWebsocketData( thing, data ):
     if dats['op'] == 'getall':
        thing.send( json.dumps( AllPlayers ) );
        return;
+    if dats['op'] == 'makeMove':
+        #calculate new location of the players move
+        ourPlayer = dats['p']
+        ourPlayer['x'] = ourPlayer['x'] + ourPlayer['dx']
+        ourPlayer['y'] = ourPlayer['y'] + ourPlayer['dy']
+
+        #update all the sprite locations
+        AllPlayers[thing.pid]['dx'] = ourPlayer['dx']
+        AllPlayers[thing.pid]['dy'] = ourPlayer['dy']
+        print "move made"
 
 
     #print "You are: " + thing.pid

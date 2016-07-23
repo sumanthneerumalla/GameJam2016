@@ -24,39 +24,47 @@ var AllSprites = {};
 
 addEventListener("keydown", function (e) {
     keysDown[e.keyCode] = true;
+	userInputUpdate();
 }, false);
 
 addEventListener("keyup", function (e) {
-	if (e.keyCode == 32){
-		player.speed = 100;
-	}
-    delete keysDown[e.keyCode];
+	delete keysDown[e.keyCode];
+	userInputUpdate();
 }, false);
 
 // Game objects
 var player = {
     speed: 100,
     x : 0,
-    y : 0
+    y : 0,
+	dx: 0,
+	dy:0
 };
 
-var update = function (modifier) {
-    if (38 in keysDown) { // Player holding up
-        player.y -= player.speed * modifier;
+function userInputUpdate() {
+    player.dx = 0;
+	player.dy = 0;
+	if (38 in keysDown) { // Player holding up
+        player.dy -= player.speed ;
     }
     if (40 in keysDown) { // Player holding down
-        player.y += player.speed * modifier;
+        player.dy += player.speed ;
     }
     if (37 in keysDown) { // Player holding left
-        player.x -= player.speed * modifier;
+        player.dx -= player.speed ;
     }
     if (39 in keysDown) { // Player holding right
-        player.x += player.speed * modifier;
+        player.dx += player.speed ;
     }
-    if (32 in keysDown){
-    	player.speed = 200;
-
+    if (32  in keysDown){
+    	player.speed = 300;
 	}
+	else {
+		player.speed = 100;
+	}
+
+	console.log(player)
+	move(); // send the players recent direction changes to the server
 
 };
 
@@ -139,9 +147,9 @@ function GetallResponse( req, data )
 	AllSprites = JSON.parse( data );
 }
 
-function move(keyValue){
-	var GetRequest = { op:'makeMove' };
-	QueueOperation(GetRequest, Null );
+function move(){
+	var GetRequest = { op:'makeMove', p: player };
+	QueueOperation(GetRequest, null );
 }
 
 function CommsLoop()
