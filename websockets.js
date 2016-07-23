@@ -7,6 +7,7 @@ var lastitem;
 var SystemMessageTimeout = null;
 var commsup = 0;
 
+var uniqueid;
 
 function IssueSystemMessage( msg )
 {
@@ -19,8 +20,10 @@ function IssueSystemMessage( msg )
 }
 
 
-function QueueOperation( command, callback )
+function QueueOperation( objx, callback )
 {
+    command = JSON.stringify( objx );
+	console.log( command );
 	if( workarray[command] == 1 )
 	{
 		return;
@@ -63,7 +66,7 @@ function StartWebSocket()
 
 function onOpen(evt)
 {
-	doSend('e' );
+	doSend( '{"pid":"'+localStorage.pid+'"}' );
 }
 
 function onClose(evt)
@@ -79,7 +82,7 @@ var time_since_hz = 10; //Make it realize it was disconnected to begin with.
 
 function Ticker()
 {
-	setTimeout( Ticker, 1000 );
+	setTimeout( Ticker, 2000 );
 
 	lasthz = (msg - tickmessage);
 	tickmessage = msg;
@@ -168,7 +171,13 @@ function doSend(message)
 
 function init()
 {
+	if( !localStorage.pid )
+	{
+		console.log( "No pid.\n" );
+		localStorage.pid = Math.random();
+	}
 	console.log( "Load complete.\n" );
+	console.log( localStorage.pid );
 	Ticker();
 }
 
