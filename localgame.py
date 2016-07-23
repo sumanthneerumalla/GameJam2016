@@ -10,6 +10,7 @@ from ws4py.server.cherrypyserver import WebSocketPlugin, WebSocketTool
 from ws4py.websocket import WebSocket
 from ws4py.messaging import TextMessage
 
+AllPlayers = {}
 
 def GotWebsocketData( thing, data ):
 
@@ -18,9 +19,13 @@ def GotWebsocketData( thing, data ):
     except:
         return
 
+    if 'pid' in dats:
+    	if hasattr(thing, 'pid'):  #Handle renaming of players.
+            AllPlayers[dats['pid']] = AllPlayers[thing.pid]
+            AllPlayers.remove( thing.pid );
+        thing.pid = dats['pid']
+
     if not hasattr(thing, 'pid'):
-        if 'pid' in dats:
-            thing.pid = dats['pid']
         return;
 
     print "You are: " + thing.pid

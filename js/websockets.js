@@ -23,7 +23,7 @@ function IssueSystemMessage( msg )
 function QueueOperation( objx, callback )
 {
     command = JSON.stringify( objx );
-	console.log( command );
+	//console.log( command );
 	if( workarray[command] == 1 )
 	{
 		return;

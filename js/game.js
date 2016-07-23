@@ -7,6 +7,15 @@ var ctx;
 // Handle keyboard controls
 var keysDown = {};
 
+// All Sprites (mostly players)
+// [id].x = current x         px
+// [id].y = current y         px
+// [id].dx = current speed x  px/s
+// [id].dy = current speed y  px/s
+// [id].sprite = SpriteName   "name"
+var AllSprites = {};
+
+
 addEventListener("keydown", function (e) {
     keysDown[e.keyCode] = true;
 }, false);
@@ -77,6 +86,12 @@ function gameload() {
 	canvas = document.getElementById("myCanvas");
 	ctx = canvas.getContext("2d");
 
+	$('#PlayerName').change(function(){
+		localStorage.pid = this.value;
+		console.log( this.value );
+		doSend( '{"pid":"'+localStorage.pid+'"}' );
+	});
+
 	starttime = d.getTime();
 	setTimeout( render, 16 );
 };
@@ -84,21 +99,21 @@ function gameload() {
 
 
 
-
-
 function response( req, data )
 {
-    console.log( "response: " + data );
+    //console.log( "response: " + data );
 }
 
 function CommsLoop()
 {
     setTimeout( CommsLoop, 100 );
 
-    var MyObject = { x:5 };
+    var MyObject = { op:'noop', x:5 };
 
     QueueOperation(MyObject, response );
 }
 
-
 setTimeout( CommsLoop, 100 );
+
+
+
