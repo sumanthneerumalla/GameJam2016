@@ -90,6 +90,9 @@ function render() {
 	//var AllSprites = {};
 	for( var key in AllSprites )
 	{
+		var spr = AllSprites[key];
+	    ctx.drawImage(Lig0, spr.x, spr.y );
+
 		//console.log( key );
 	}
 
