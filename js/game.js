@@ -114,6 +114,8 @@ function render() {
 		var iir = 0.02;
 		if( sp.cx && sp.cy )
 		{
+			var curdiff = Math.sqrt((sp.cx - mapCenterX)*(sp.cx - mapCenterX) + (sp.cy - mapCenterY)*(sp.cy - mapCenterY) )
+			if( curdiff > 300 ) iir = 1;
 			mapCenterX = sp.cx * iir + mapCenterX * (1.0-iir );
 			mapCenterY = sp.cy * iir + mapCenterY * (1.0-iir );
 		}
