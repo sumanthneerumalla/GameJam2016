@@ -8,11 +8,13 @@ var ctx;
 var keysDown = {};
 
 // All Sprites (mostly players)
-// [id].x = current x         px
-// [id].y = current y         px
-// [id].dx = current speed x  px/s
-// [id].dy = current speed y  px/s
-// [id].sprite = SpriteName   "name"
+// [id].x = current x (server)  px
+// [id].y = current y (server)  px
+// [id].cx = current x (client) px
+// [id].cy = current y (client) px
+// [id].dx = current speed x    px/s
+// [id].dy = current speed y    px/s
+// [id].sprite = SpriteName     "name"
 var AllSprites = {};
 
 
@@ -101,16 +103,15 @@ function gameload() {
 
 function response( req, data )
 {
-    //console.log( "response: " + data );
+    console.log( "response: " + data );
 }
 
 function CommsLoop()
 {
     setTimeout( CommsLoop, 100 );
 
-    var MyObject = { op:'noop', x:5 };
-
-    QueueOperation(MyObject, response );
+    var GetRequest = { op:'getall' };
+    QueueOperation(GetRequest, response );
 }
 
 setTimeout( CommsLoop, 100 );

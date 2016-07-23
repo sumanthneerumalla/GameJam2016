@@ -22,16 +22,27 @@ def GotWebsocketData( thing, data ):
     if 'pid' in dats:
     	if hasattr(thing, 'pid'):  #Handle renaming of players.
             AllPlayers[dats['pid']] = AllPlayers[thing.pid]
-            AllPlayers.remove( thing.pid );
+            del AllPlayers[ thing.pid ];
+        else:
+            AllPlayers[dats['pid']] = { 'x':5, 'y':5 }
+
         thing.pid = dats['pid']
+        return
 
     if not hasattr(thing, 'pid'):
         return;
 
-    print "You are: " + thing.pid
-    for each in dats:
-        print each + ' = ' + str( dats[each] )
+    if not 'op' in dats:
+        print "No operation found for " + str(data);
 
-    cherrypy.engine.publish('websocket-broadcast', "response")
+    if dats['op'] == 'getall':
+       thing.send( json.dumps( AllPlayers ) );
+       return;
+
+
+    #print "You are: " + thing.pid
+    #for each in dats:
+    #    print each + ' = ' + str( dats[each] )
+	#thing.send( "response" );
 
 
