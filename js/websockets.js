@@ -178,6 +178,7 @@ function init()
 	}
 	console.log( "Load complete.\n" );
 	console.log( localStorage.pid );
+	$('#PlayerName').val(localStorage.pid);
 	Ticker();
 	gameload();
 }

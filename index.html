@@ -8,12 +8,21 @@
     <script type='application/javascript' src="js/game.js"></script>
     <style>
         #SystemMessage { position: fixed; top: 5px; background-color: DarkSlateBlue; color: #ffffff; left: 5px; display:none; }
-        .hiddenImage {visibility: hidden}
-        #myCanvas { background-color: grey; margin: 0px auto 0px auto; }
+        .hiddenImage {visibility: hidden; display:none}
+        #ninput { position: absolute; left: 10; top: 10; z-index:5 }
+        #myCanvas { background-color: grey; margin: 0px auto 0px auto; position:absolute; left:0; top:0; z-index:-5 }
+		body, html {
+		  padding: 0px;
+		  margin: 0px;
+		  border: 0px none;
+		  width: 100%;
+		  height: 100%;
+          overflow: hidden;
+		}
     </style>
 </head>
 <body>
-Name: <INPUT type=text id=PlayerName><br>
+<div id=ninput>Name: <INPUT type=text id=PlayerName></div>
 <canvas id="myCanvas"></canvas>
 <img class="hiddenImage" id="background" src="images/trees.jpg">
 <img class="hiddenImage" id="player" src="images/bird.png">
