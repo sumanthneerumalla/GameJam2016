@@ -93,10 +93,8 @@ function render() {
  
 	canvas.width  = window.innerWidth;
 	canvas.height = window.innerHeight;
- 
-	var background = document.getElementById("background");
-	//var player =     document.getElementById("player");
-    ctx.drawImage(background, 0, 0);
+
+    ctx.drawImage(BackGround, 0, 0);
 
 	var Lig0 =     document.getElementById("Lig0");
 
@@ -176,6 +174,33 @@ function CommsLoop()
     var GetRequest = { op:'getall' };
     QueueOperation(GetRequest, GetallResponse );
 }
+
+var BackGround = new Image();
+BackGround.src = "images/treesBIGGER.jpg"
+
+var LigDown = new Image();
+LigDown.src = "images/LigDown.png";
+
+var LigUp = new Image();
+LigUp.src = "images/LigUp.png";
+
+var LigLeft = new Image();
+LigLeft.src = "images/LigLeft.png";
+
+var LigRight = new Image();
+LigRight.src = "images/LigRight.png";
+
+var AquilDown = new Image();
+AquilDown.src = "images/AquilDown.png";
+
+var AquilUp = new Image();
+AquilUp.src = "images/AquilUp.png";
+
+var AquilLeft = new Image ();
+AquilLeft.src = "images/AquilLeft.png";
+
+var AquilRight = new Image();
+AquilRight.src = "images/AquilRight.png";
 
 setTimeout( CommsLoop, 100 );
 
