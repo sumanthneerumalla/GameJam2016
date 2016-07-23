@@ -54,8 +54,10 @@ var update = function (modifier) {
         player.x += player.speed * modifier;
     }
     if (32 in keysDown){
-    	play.speed = 200;
+    	player.speed = 200;
+
 	}
+
 };
 
 // Draw everything
@@ -102,6 +104,7 @@ function render() {
 		//console.log( key );
 	}
 
+
 /*
 //	console.log( background );
 //	console.log( player );
@@ -134,6 +137,11 @@ function gameload() {
 function GetallResponse( req, data )
 {
 	AllSprites = JSON.parse( data );
+}
+
+function move(keyValue){
+	var GetRequest = { op:'makeMove' };
+	QueueOperation(GetRequest, Null );
 }
 
 function CommsLoop()
