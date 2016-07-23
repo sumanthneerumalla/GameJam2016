@@ -99,11 +99,10 @@ function gameload() {
 };
 
 
-
-
-function response( req, data )
+function GetallResponse( req, data )
 {
-    console.log( "response: " + data );
+    //console.log( "response: " + data );
+	AllSprites = JSON.parse( data );
 }
 
 function CommsLoop()
@@ -111,7 +110,7 @@ function CommsLoop()
     setTimeout( CommsLoop, 100 );
 
     var GetRequest = { op:'getall' };
-    QueueOperation(GetRequest, response );
+    QueueOperation(GetRequest, GetallResponse );
 }
 
 setTimeout( CommsLoop, 100 );
