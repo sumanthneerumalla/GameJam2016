@@ -27,6 +27,9 @@ addEventListener("keydown", function (e) {
 }, false);
 
 addEventListener("keyup", function (e) {
+	if (e.keyCode == 32){
+		player.speed = 100;
+	}
     delete keysDown[e.keyCode];
 }, false);
 
@@ -50,6 +53,11 @@ var update = function (modifier) {
     if (39 in keysDown) { // Player holding right
         player.x += player.speed * modifier;
     }
+    if (32 in keysDown){
+    	player.speed = 200;
+
+	}
+
 };
 
 // Draw everything
@@ -96,6 +104,7 @@ function render() {
 		//console.log( key );
 	}
 
+
 /*
 //	console.log( background );
 //	console.log( player );
@@ -128,6 +137,11 @@ function gameload() {
 function GetallResponse( req, data )
 {
 	AllSprites = JSON.parse( data );
+}
+
+function move(keyValue){
+	var GetRequest = { op:'makeMove' };
+	QueueOperation(GetRequest, Null );
 }
 
 function CommsLoop()
