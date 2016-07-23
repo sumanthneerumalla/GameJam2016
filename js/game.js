@@ -1,3 +1,7 @@
+var music = new Audio("music/HeatOfBattle.mp3");
+
+music.play();
+
 // Create the canvas
 var canvas;
 
@@ -81,7 +85,7 @@ function render() {
 			Math.sin(ltime/100000.0*(k+100))*30+100 + (k % 30)*40,
 			Math.cos(ltime/100000.0*(k+100))*30+100 + (k / 30)*40 );
 	}
-};
+}
 
 function gameload() {
 	var d = new Date();
@@ -96,7 +100,7 @@ function gameload() {
 
 	starttime = d.getTime();
 	setTimeout( render, 16 );
-};
+}
 
 
 function GetallResponse( req, data )
