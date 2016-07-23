@@ -27,6 +27,11 @@ var AllServer = {};
 var AllSprites = {};
 
 
+var mapCenterX = 0;
+var mapCenterY = 0;
+
+
+
 addEventListener("keydown", function (e) {
     keysDown[e.keyCode] = true;
 	userInputUpdate();
@@ -68,7 +73,6 @@ function userInputUpdate() {
 		player.speed = 100;
 	}
 
-	console.log(player)
 	move(); // send the players recent direction changes to the server
 
 };
@@ -94,8 +98,6 @@ function render() {
 	canvas.width  = window.innerWidth;
 	canvas.height = window.innerHeight;
 
-    ctx.drawImage(BackGround, 0, 0);
-
 	var Lig0 =     document.getElementById("Lig0");
 
 	// All Sprites (mostly players)
@@ -106,12 +108,28 @@ function render() {
 	// [id].sprite = SpriteName     "name"
 	//var AllSprites = {};
 
+	if( localStorage.pid in AllSprites )
+	{
+		var sp = AllSprites[localStorage.pid];
+		var iir = 0.02;
+		console.log( sp.cx );
+		if( sp.cx && sp.cy )
+		{
+			mapCenterX = sp.cx * iir + mapCenterX * (1.0-iir );
+			mapCenterY = sp.cy * iir + mapCenterY * (1.0-iir );
+		}
+	}
+	var mapofx = mapCenterX - canvas.width/2;
+	var mapofy = mapCenterY - canvas.height/2;
+
+    ctx.drawImage(BackGround, -mapofx, -mapofy);
+
 	for( var key in AllSprites )
 	{
 		var spr = AllSprites[key];
 		spr.cx += spr.dx * dtime/1000.0;
 		spr.cy += spr.dy * dtime/1000.0;
-	    ctx.drawImage(Lig0, spr.cx, spr.cy );
+	    ctx.drawImage(Lig0, spr.cx-mapofx, spr.cy-mapofy );
 
 		//console.log( key );
 	}
