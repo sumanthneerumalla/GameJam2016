@@ -111,7 +111,7 @@ function render() {
 	if( localStorage.pid in AllSprites )
 	{
 		var sp = AllSprites[localStorage.pid];
-		var iir = 0.02;
+		var iir = 0.03;
 		if( sp.cx && sp.cy )
 		{
 			var curdiff = Math.sqrt((sp.cx - mapCenterX)*(sp.cx - mapCenterX) + (sp.cy - mapCenterY)*(sp.cy - mapCenterY) )
@@ -130,7 +130,6 @@ function render() {
 		var spr = AllSprites[key];
 		spr.cx += spr.dx * dtime/1000.0;
 		spr.cy += spr.dy * dtime/1000.0;
-		console.log(spr)
 
 		if (!spr.currentSprite ){
 			spr.currentSprite = LigDown;
