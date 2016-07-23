@@ -8,10 +8,16 @@
     <script type='application/javascript' src='game.js'></script>
     <style>
         #SystemMessage { position: fixed; top: 5px; background-color: DarkSlateBlue; color: #ffffff; left: 5px; display:none; }
+        .hiddenImage {visibility: hidden}
+        #myCanvas { background-color: grey; width: 100%;
+            margin: 0px auto 0px auto;
+        }
     </style>
 </head>
 <body>
 <canvas id="myCanvas"></canvas>
+<img class="hiddenImage" id="background" src="images/trees.jpg">
+<img class="hiddenImage" id="player" src="images/player.jpg">
 <script src="js/game.js"></script>
 </body>
 </html>

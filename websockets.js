@@ -179,6 +179,7 @@ function init()
 	console.log( "Load complete.\n" );
 	console.log( localStorage.pid );
 	Ticker();
+	gameload();
 }
 
 window.addEventListener("load", init, false);
