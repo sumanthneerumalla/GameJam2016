@@ -4,7 +4,9 @@ import os
 import cherrypy
 import string
 import json
-
+import threading
+import time
+import math
 
 from ws4py.server.cherrypyserver import WebSocketPlugin, WebSocketTool
 from ws4py.websocket import WebSocket
@@ -12,8 +14,37 @@ from ws4py.messaging import TextMessage
 
 AllPlayers = {}
 
-def GotWebsocketData( thing, data ):
+StartTime = 0.0
+TimeNow = 0.0
+LastTickTime = 0.0
+DeltaTime = 0.0
+TimeSinceStart = 0.0
 
+def TickEvent():
+    global StartTime, LastTickTime, AllPlayers
+    threading.Timer(0.1, TickEvent).start()
+    TimeNow = time.time()
+    DeltaTime = TimeNow - LastTickTime
+    LastTickTime = TimeNow
+    TimeSinceStart = TimeNow - StartTime
+
+    TestSprite = {}
+    TestSprite['x'] = math.sin( TimeSinceStart ) * 200 + 200;
+    TestSprite['y'] = math.cos( TimeSinceStart ) * 200 + 200;
+    TestSprite['dx'] = math.cos( TimeSinceStart );
+    TestSprite['dy'] = math.sin( TimeSinceStart );
+    TestSprite['sprite'] = 'Lig';
+    AllPlayers['testsprite'] = TestSprite
+
+def StartGame():
+    global StartTime, LastTickTime
+    StartTime = time.time()
+    LastTickTime = StartTime
+    TickEvent()
+	
+
+def GotWebsocketData( thing, data ):
+    global AllPlayers
     try:
         dats = json.loads( str(data) );
     except:

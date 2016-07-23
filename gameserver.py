@@ -53,6 +53,8 @@ if __name__ == '__main__':
 
     PATH = os.path.abspath(os.path.dirname(__file__))
 
+    StartGame()
+
     cherrypy.quickstart(Root(args.host, args.port, args.ssl), '', config={
         '/': {
                 'tools.staticdir.on': True,

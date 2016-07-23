@@ -70,10 +70,28 @@ function render() {
 	canvas.height = window.innerHeight;
  
 	var background = document.getElementById("background");
-	var player =     document.getElementById("player");
+	//var player =     document.getElementById("player");
+    ctx.drawImage(background, 0, 0);
+
+	var Lig0 =     document.getElementById("Lig0");
+
+	// All Sprites (mostly players)
+	// [id].x = current x (server)  px
+	// [id].y = current y (server)  px
+	// [id].cx = current x (client) px
+	// [id].cy = current y (client) px
+	// [id].dx = current speed x    px/s
+	// [id].dy = current speed y    px/s
+	// [id].sprite = SpriteName     "name"
+	//var AllSprites = {};
+	for( var key in AllSprites )
+	{
+		//console.log( key );
+	}
+
+/*
 //	console.log( background );
 //	console.log( player );
-    ctx.drawImage(background, 0, 0);
 	var k;
 	for( k = 0; k < 300; k++ )
 	{
@@ -81,6 +99,7 @@ function render() {
 			Math.sin(ltime/100000.0*(k+100))*30+100 + (k % 30)*40,
 			Math.cos(ltime/100000.0*(k+100))*30+100 + (k / 30)*40 );
 	}
+*/
 };
 
 function gameload() {
@@ -101,7 +120,6 @@ function gameload() {
 
 function GetallResponse( req, data )
 {
-    //console.log( "response: " + data );
 	AllSprites = JSON.parse( data );
 }
 
