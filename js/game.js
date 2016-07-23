@@ -14,10 +14,15 @@ var keysDown = {};
 // All Sprites (mostly players)
 // [id].x = current x (server)  px
 // [id].y = current y (server)  px
-// [id].cx = current x (client) px
-// [id].cy = current y (client) px
 // [id].dx = current speed x    px/s
 // [id].dy = current speed y    px/s
+// [id].sprite = SpriteName     "name"
+var AllServer = {};
+
+// [id].cx = current x (client) px
+// [id].cy = current y (client) px
+// [id].dx = current x (client) px
+// [id].dy = current y (client) px
 // [id].sprite = SpriteName     "name"
 var AllSprites = {};
 
@@ -96,18 +101,19 @@ function render() {
 	var Lig0 =     document.getElementById("Lig0");
 
 	// All Sprites (mostly players)
-	// [id].x = current x (server)  px
-	// [id].y = current y (server)  px
 	// [id].cx = current x (client) px
 	// [id].cy = current y (client) px
 	// [id].dx = current speed x    px/s
 	// [id].dy = current speed y    px/s
 	// [id].sprite = SpriteName     "name"
 	//var AllSprites = {};
+
 	for( var key in AllSprites )
 	{
 		var spr = AllSprites[key];
-	    ctx.drawImage(Lig0, spr.x, spr.y );
+		spr.cx += spr.dx * dtime/1000.0;
+		spr.cy += spr.dy * dtime/1000.0;
+	    ctx.drawImage(Lig0, spr.cx, spr.cy );
 
 		//console.log( key );
 	}
@@ -144,7 +150,18 @@ function gameload() {
 
 function GetallResponse( req, data )
 {
-	AllSprites = JSON.parse( data );
+	AllServer = JSON.parse( data );
+	for( var key in AllServer )
+	{
+		var iir = 0.6; //Slowness
+		var sv = AllServer[key];
+		if( !( key in AllSprites ) ) AllSprites[key] = { cx: sv.x, cy: sv.y };
+		AllSprites[key].cx = AllSprites[key].cx * (iir) + sv.x * (1.-iir);
+		AllSprites[key].cy = AllSprites[key].cy * (iir) + sv.y * (1.-iir);
+		AllSprites[key].dx = sv.dx;
+		AllSprites[key].dy = sv.dy;
+		AllSprites[key].sprite = sv.sprite;
+	}
 }
 
 function move(){
