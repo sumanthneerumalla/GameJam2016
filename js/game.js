@@ -44,7 +44,7 @@ addEventListener("keyup", function (e) {
 
 // Game objects
 var player = {
-    speed: 100,
+    speed: 150,
     x : 0,
     y : 0,
 	dx: 0,
@@ -54,16 +54,16 @@ var player = {
 function userInputUpdate() {
     player.dx = 0;
 	player.dy = 0;
-	if (38 in keysDown) { // Player holding up
+	if ((38 in keysDown) || (87 in keysDown)) { // Player holding up
         player.dy -= player.speed ;
     }
-    if (40 in keysDown) { // Player holding down
+    if ((40 in keysDown) || (83 in keysDown)) { // Player holding down
         player.dy += player.speed ;
     }
-    if (37 in keysDown) { // Player holding left
+    if ((37 in keysDown) || (65 in keysDown)) { // Player holding left
         player.dx -= player.speed ;
     }
-    if (39 in keysDown) { // Player holding right
+    if ((39 in keysDown) || (68 in keysDown)) { // Player holding right
         player.dx += player.speed ;
     }
     if (32  in keysDown){
@@ -128,7 +128,28 @@ function render() {
 		var spr = AllSprites[key];
 		spr.cx += spr.dx * dtime/1000.0;
 		spr.cy += spr.dy * dtime/1000.0;
-	    ctx.drawImage(Lig0, spr.cx-mapofx, spr.cy-mapofy );
+		console.log(spr)
+
+		if (!spr.currentSprite ){
+			spr.currentSprite = LigDown;
+		} ;
+
+	    if ( (spr.dx > 0) && (spr.dy == 0) ){
+			spr.currentSprite = LigRight
+		}
+		else if( (spr.dx <0) && (spr.dy == 0)){
+			spr.currentSprite = LigLeft
+		}
+		else if( (spr.dy > 0) && (spr.dx == 0) ){
+			spr.currentSprite = LigDown
+		}
+		else if( (spr.dy <0) && (spr.dx == 0)){
+			spr.currentSprite = LigUp
+		}
+		else{
+			spr.currentSprite = LigDown
+		}
+	    ctx.drawImage(spr.currentSprite, spr.cx-mapofx, spr.cy-mapofy );
 
 		//console.log( key );
 	}
@@ -197,7 +218,7 @@ function CommsLoop()
 }
 
 var BackGround = new Image();
-BackGround.src = "images/treesBIGGER.jpg"
+BackGround.src = "images/treesBIGGER.jpg";
 
 var LigDown = new Image();
 LigDown.src = "images/LigDown.png";
