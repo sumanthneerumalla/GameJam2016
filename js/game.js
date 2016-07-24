@@ -207,8 +207,15 @@ function render() {
 		var spr = AllSprites[key];
 		spr.timesinceserver += dtime/1000.0;
 
+		var timeleft = 10;
+		if( spr.timeleft )
+		{
+			spr.timeleft -= dtime/1000.0;
+			timeleft = spr.timeleft;
+		}
+
 		//Can only delete one element at a time
-		if( spr.timesinceserver > 2 )
+		if( spr.timesinceserver > 2 || timeleft < 0 )
 		{
 			delete AllSprites[key];
 			break;
