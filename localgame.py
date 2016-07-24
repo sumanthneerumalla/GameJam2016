@@ -130,9 +130,9 @@ def UpdateAllSprites(AllSprites, DeltaTime):
                 continue
             e = AllSprites[ename];
             dist = math.sqrt((e['x']-p['x'])*(e['x']-p['x']) + (e['y']-p['y'])*(e['y']-p['y']))
-            if dist < eggsize and e['timeleft'] > 0:
+            if dist < eggsize and e['timeleft'] > 0.2:
                 p['health'] += 25
-                e['timeleft'] = 0
+                e['timeleft'] = 0.12
                 if p['health'] > 100:
                     p['health'] = 100
 
