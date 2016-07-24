@@ -245,9 +245,10 @@ function gameload() {
 	});
 
 	$('#RespawnButton').click(function(){
-		var GetRequest = { op:'respawn' };
+		var GetRequest = { op:'respawn', spec:$('#chooseSpecies').val() };
 		QueueOperation( GetRequest, null );
 	});
+
 
 	starttime = d.getTime();
 	setTimeout( render, 16 );

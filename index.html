@@ -22,8 +22,16 @@
     </style>
 </head>
 <body>
-<div id=ninput>Name: <INPUT type=text id=PlayerName><BR><INPUT type=submit id=RespawnButton value=Respawn></div>
+<div id=ninput>Name: <INPUT type=text id=PlayerName><BR>
+<INPUT type=submit id=RespawnButton value=Respawn>
+ <select id="chooseSpecies">
+  <option value="lig">Lig</option>
+  <option value="aquil">Aquil</option>
+  <option value="acer">Acer</option>
+</select> 
+
 <canvas id="myCanvas"></canvas>
+
 <img class="hiddenImage" id="background" src="images/trees.jpg">
 <img class="hiddenImage" id="player" src="images/bird.png">
 

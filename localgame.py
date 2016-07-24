@@ -57,10 +57,10 @@ def StartGame():
     LastTickTime = StartTime
     TickEvent()
 
-def Respawn( pid ):
+def Respawn( pid, species ):
     xStart = random.randrange(0, CanvasWidth, 1)
     yStart = random.randrange(0, CanvasHeight, 1)
-    AllSprites[pid] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0, 'health': 100 }
+    AllSprites[pid] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0, 'health': 100, 'sprite':species }
 
 
 def UpdateAllSprites(AllSprites, DeltaTime):
@@ -103,7 +103,7 @@ def UpdateAllSprites(AllSprites, DeltaTime):
             if dist < booletsize:
                 p['health'] -= 1
                 if( p['health'] <= 0 ):
-                    Respawn( pname )
+                    Respawn( pname, AllSprites[thing.pid]['sprite'] )
 
 
 def GotWebsocketData( thing, data ):
@@ -118,7 +118,7 @@ def GotWebsocketData( thing, data ):
             AllSprites[dats['pid']] = AllSprites[thing.pid]
             del AllSprites[ thing.pid ];
         else:
-            Respawn(dats['pid'])
+            Respawn(dats['pid'], 'aquil' )
 
         thing.pid = dats['pid']
         return
@@ -142,7 +142,7 @@ def GotWebsocketData( thing, data ):
         AllSprites[thing.pid]['dx'] = ourPlayer['dx']
         AllSprites[thing.pid]['dy'] = ourPlayer['dy']
     elif dats['op'] == 'respawn':
-        Respawn( thing.pid )
+        Respawn( thing.pid, dats['spec'] )
     elif dats['op'] == 'bul':
         f = random.random()*100000.0;
         AllSprites[f] = { 'isboolet': True, 'timeleft': dats['time'], 'x': dats['x'], 'y': dats['y'], 'dx': dats['dx'], 'dy': dats['dy'], 'owner':thing.pid };
