@@ -30,6 +30,10 @@ var AllSprites = {};
 var mapCenterX = 0;
 var mapCenterY = 0;
 
+var playerWidth = 100;
+var playerHeight = 100;
+
+
 
 
 addEventListener("keydown", function (e) {
@@ -150,11 +154,26 @@ function render() {
 		else{
 			spr.currentSprite = LigDown
 		}
+
 	    ctx.drawImage(spr.currentSprite, spr.cx-mapofx, spr.cy-mapofy );
 
 		//console.log( key );
 	}
 
+	ctx.font = "28px Arial";
+    ctx.textAlign="center"; 
+	for( var key  in AllSprites )
+	{
+		var spr = AllSprites[key];
+		if( !spr.health ) continue;
+		ctx.fillStyle="#FFFFFF";
+		ctx.fillText(key,spr.cx-mapofx+playerWidth/2, spr.cy-mapofy);
+		ctx.strokeText(key,spr.cx-mapofx+playerWidth/2, spr.cy-mapofy);
+		ctx.fillStyle="#000000";
+		ctx.fillRect(spr.cx-mapofx, spr.cy-mapofy+playerHeight, playerWidth+2, 16);
+		ctx.fillStyle="#00FF00";
+		ctx.fillRect(spr.cx-mapofx+1, spr.cy-mapofy+1+playerHeight, playerWidth*spr.health/100.0, 14);
+	}
 
 /*
 //	console.log( background );
@@ -202,6 +221,7 @@ function GetallResponse( req, data )
 		AllSprites[key].dx = sv.dx;
 		AllSprites[key].dy = sv.dy;
 		AllSprites[key].sprite = sv.sprite;
+		if( sv.health ) AllSprites[key].health = sv.health;
 	}
 }
 
