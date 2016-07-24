@@ -60,7 +60,9 @@ function myMouseHandler(mouseX,mouseY) {
     if (!AllSprites[localStorage.pid]){
         return
     }
-    console.log(AllSprites[localStorage.pid]);
+	mouseX += mapCenterX-canvas.width/2;
+	mouseY += mapCenterY-canvas.height/2;
+
     var playerX = AllSprites[localStorage.pid].cx;
     var playerY = AllSprites[localStorage.pid].cy;
     var dx = playerX - mouseX;
@@ -69,6 +71,7 @@ function myMouseHandler(mouseX,mouseY) {
     dx /= magnitude;
     dy /= magnitude;
     var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY};
+	console.log( GetRequest );
     QueueOperation(GetRequest, null );
 }
 // Game objects
