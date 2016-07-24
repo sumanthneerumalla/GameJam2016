@@ -1,7 +1,10 @@
 var music = new Audio("music/HeatOfBattle.mp3");
-var shoot = new Audio("music/shoot.mp3");
-var hit = new Audio("music/hit.mp3");
+var effects = {"shoot": new Audio("music/shoot.mp3"),"hit": new Audio("music/hit.mp3")}
 
+function playEffect(name){
+	effects[name].currentTime = 0;
+	effects[name].play();
+}
 music.play();
 
 // Create the canvas
