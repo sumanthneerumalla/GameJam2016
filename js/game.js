@@ -24,6 +24,8 @@ var AllServer = {};
 // [id].dx = current x (client) px
 // [id].dy = current y (client) px
 // [id].sprite = SpriteName     "name"
+// [id].health
+// [id].timesinceserver
 var AllSprites = {};
 
 
@@ -174,7 +176,7 @@ function render() {
 			spr.currentSprite = LigDown
 		}
 
-	    ctx.drawImage(spr.currentSprite, spr.cx-mapofx, spr.cy-mapofy );
+	    ctx.drawImage(spr.currentSprite, spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
 
 		//console.log( key );
 	}
@@ -186,12 +188,12 @@ function render() {
 		var spr = AllSprites[key];
 		if( !spr.health ) continue;
 		ctx.fillStyle="#FFFFFF";
-		ctx.fillText(key,spr.cx-mapofx+playerWidth/2, spr.cy-mapofy);
-		ctx.strokeText(key,spr.cx-mapofx+playerWidth/2, spr.cy-mapofy);
+		ctx.fillText(key,spr.cx-mapofx, spr.cy-mapofy-playerHeight/2);
+		ctx.strokeText(key,spr.cx-mapofx, spr.cy-mapofy-playerHeight/2);
 		ctx.fillStyle="#000000";
-		ctx.fillRect(spr.cx-mapofx, spr.cy-mapofy+playerHeight, playerWidth+2, 16);
+		ctx.fillRect(spr.cx-mapofx-playerWidth/2, spr.cy-mapofy+playerHeight/2, playerWidth+2, 16);
 		ctx.fillStyle="#00FF00";
-		ctx.fillRect(spr.cx-mapofx+1, spr.cy-mapofy+1+playerHeight, playerWidth*spr.health/100.0, 14);
+		ctx.fillRect(spr.cx-mapofx+1-playerWidth/2, spr.cy-mapofy+1+playerHeight/2, playerWidth*spr.health/100.0, 14);
 	}
 
 /*
@@ -240,6 +242,7 @@ function GetallResponse( req, data )
 		AllSprites[key].dx = sv.dx;
 		AllSprites[key].dy = sv.dy;
 		AllSprites[key].sprite = sv.sprite;
+		AllSprites[key].timesinceserver = 0;
 		if( sv.health ) AllSprites[key].health = sv.health;
 	}
 }
