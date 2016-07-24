@@ -68,7 +68,7 @@ addEventListener("mousedown", function (e) {
     var mouseX = e.pageX;
     var mouseY = e.pageY;
     myMouseHandler(mouseX,mouseY);
-	shoot.play();
+	playEffect("shoot");
 },false);
 
 function myMouseHandler(mouseX,mouseY) {
@@ -329,7 +329,7 @@ function GetallResponse( req, data )
 		if( sv.health )
 		{
 			if ( sv.health != AllSprites[key.health]){
-				hit.play();
+				playEffect("hit");
 			}
 			AllSprites[key].health = sv.health;
 			AllSprites[key].deaths = sv.deaths?sv.deaths:0;
