@@ -1,4 +1,6 @@
 var music = new Audio("music/HeatOfBattle.mp3");
+var shoot = new Audio("music/shoot.mp3");
+var hit = new Audio("music/hit.mp3");
 
 music.play();
 
@@ -62,7 +64,8 @@ addEventListener("mousedown", function (e) {
     userInputUpdate();
     var mouseX = e.pageX;
     var mouseY = e.pageY;
-    myMouseHandler(mouseX,mouseY)
+    myMouseHandler(mouseX,mouseY);
+	shoot.play();
 },false);
 
 function myMouseHandler(mouseX,mouseY) {
@@ -317,6 +320,9 @@ function GetallResponse( req, data )
 		AllSprites[key].sprite = sv.sprite;
 		AllSprites[key].timesinceserver = 0;
 		if( sv.timeleft ) AllSprites[key].timeleft = sv.timeleft;
+		if ( sv.health != AllSprites[key.health]){
+			hit.play();
+		}
 		if( sv.health ) AllSprites[key].health = sv.health;
 	}
 }
