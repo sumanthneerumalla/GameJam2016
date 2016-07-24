@@ -46,8 +46,6 @@ var mapCenterY = 0;
 var playerWidth = 100;
 var playerHeight = 100;
 
-var bulletspeed = 200;
-
 
 addEventListener("keydown", function (e) {
     keysDown[e.keyCode] = true;
@@ -78,10 +76,37 @@ function myMouseHandler(mouseX,mouseY) {
     var playerY = AllSprites[localStorage.pid].cy;
     var dx =  mouseX -playerX;
     var dy =  mouseY -playerY;
-    var magnitude = 1.0/Math.sqrt(dx * dx + dy * dy) * bulletspeed;
+
+	var spr = AllSprites[localStorage.pid].sprite;
+	console.log( spr );
+
+	var proj = "ProjG";
+	var time = 1.0;
+	var speed = 100.0;
+
+	if( spr == "Aquil" )
+	{
+		proj = "ProjP";
+		speed = 600.0;
+		time = 1.0;
+	}
+	else if( spr == "Acer" )
+	{
+		proj = "ProjO";
+		speed = 300.0;
+		time = 4.0;
+	}
+	else if( spr == "Lig" )
+	{
+		proj = "ProjG";
+		speed = 600.0;
+		time = 1.0;
+	}
+
+    var magnitude = 1.0/Math.sqrt(dx * dx + dy * dy) * speed;
     dx *= magnitude;
     dy *= magnitude;
-    var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY, time:1.0, spr:'ProjG'};
+    var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY, time:time, spr:proj};
     QueueOperation(GetRequest, null );
 }
 // Game objects
@@ -283,7 +308,7 @@ function GetallResponse( req, data )
 
 		var distx = AllSprites[key].cx - sv.x;
 		var disty = AllSprites[key].cy - sv.y;
-		if( Math.sqrt( distx * distx + disty * disty ) > 200 ) iir = 0.0;
+		if( Math.sqrt( distx * distx + disty * disty ) > 200 ) iir = 0.0; //If we are too far off from where the server expects, jump.
 
 		AllSprites[key].cx = AllSprites[key].cx * (iir) + sv.x * (1.-iir);
 		AllSprites[key].cy = AllSprites[key].cy * (iir) + sv.y * (1.-iir);
