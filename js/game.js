@@ -1,5 +1,5 @@
 var music = new Audio("music/HeatOfBattle.mp3");
-var effects = {"shoot": new Audio("music/shoot.mp3"),"hit": new Audio("music/hit.mp3")}
+var effects = {"shoot": new Audio("music/shoot.mp3"),"hit": new Audio("music/hit.mp3")};
 
 function playEffect(name){
 	effects[name].currentTime = 0;
@@ -193,7 +193,7 @@ function render() {
 		var iir = 0.03;
 		if( sp.cx && sp.cy )
 		{
-			var curdiff = Math.sqrt((sp.cx - mapCenterX)*(sp.cx - mapCenterX) + (sp.cy - mapCenterY)*(sp.cy - mapCenterY) )
+			var curdiff = Math.sqrt((sp.cx - mapCenterX)*(sp.cx - mapCenterX) + (sp.cy - mapCenterY)*(sp.cy - mapCenterY) );
 			if( curdiff > 300 ) iir = 1;
 			mapCenterX = sp.cx * iir + mapCenterX * (1.0-iir );
 			mapCenterY = sp.cy * iir + mapCenterY * (1.0-iir );
@@ -229,13 +229,14 @@ function render() {
 		// else{
 		// 	spr.currentSprite = LigDown
 		// }
-		// var faces;
-		// faces = (spr.timeleft)? 8:4;
-		// var angle = Math.atan2(-spr.dy,spr.dx)/3.14159/2*faces;
-		// angle = Math.round(angle+faces)%faces;
-		if (spr.timeleft){
-			angle = Math.atan2(-spr.dy,spr.dx);
-		}
+		var faces;
+		faces = (spr.timeleft)? 8:4;
+		var angle = Math.atan2(-spr.dy,spr.dx)/3.14159/2*faces;
+		angle = Math.round(angle+faces)%faces;
+		// if (spr.timeleft){
+		// 	angle = Math.atan2(-spr.dy,spr.dx);
+		//
+		// }
 
 		try {		
 		    ctx.drawImage(ImageDict[spr.sprite][angle], spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
@@ -366,7 +367,7 @@ function GetallResponse( req, data )
 		return kdrA < kdrB;
 	} );
 	var lb = "<TABLE border=1>";
-	lb += "<TR><TH>Name</TH><TH>Kills</TH><TH>Deaths</TH></TR>"
+	lb += "<TR><TH>Name</TH><TH>Kills</TH><TH>Deaths</TH></TR>";
 	for( var i = 0; i < Players.length; i++ )
 	{
 		var p = Players[i];

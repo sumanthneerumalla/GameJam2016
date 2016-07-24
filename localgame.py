@@ -55,7 +55,7 @@ def TickEvent():
     UpdateAllSprites(AllSprites, DeltaTime)
 
     TimeSinceEgg += DeltaTime;
-    if( TimeSinceEgg > 1.0 ):
+    if( TimeSinceEgg > 2.0 ):
         SpawnEgg()
         TimeSinceEgg = 0
 
