@@ -61,8 +61,8 @@ function myMouseHandler(mouseX,mouseY) {
         return
     }
     console.log(AllSprites[localStorage.pid]);
-    var playerX = AllSprites[localStorage.pid].x;
-    var playerY = AllSprites[localStorage.pid].y;
+    var playerX = AllSprites[localStorage.pid].cx;
+    var playerY = AllSprites[localStorage.pid].cy;
     var dx = playerX - mouseX;
     var dy = playerY - mouseY;
     var magnitude = Math.sqrt(dx * dx + dy * dy);
