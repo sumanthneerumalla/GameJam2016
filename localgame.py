@@ -103,7 +103,9 @@ def UpdateAllSprites(AllSprites, DeltaTime):
             if dist < booletsize:
                 p['health'] -= 1
                 if( p['health'] <= 0 ):
-                    Respawn( pname, AllSprites[thing.pid]['sprite'] )
+                    AllSprites[pname]['deaths'] = AllSprites[pname]['deaths'] + 1
+                    AllSprites[b['owner']]['kills'] = AllSprites[b['owner']]['kills']+1
+                    Respawn( pname, AllSprites[pname]['sprite'] )
 
 
 def GotWebsocketData( thing, data ):
@@ -118,7 +120,9 @@ def GotWebsocketData( thing, data ):
             AllSprites[dats['pid']] = AllSprites[thing.pid]
             del AllSprites[ thing.pid ];
         else:
-            Respawn(dats['pid'], 'Aquil' )
+            Respawn(dats['pid'], 'Lig' )
+            AllSprites[dats['pid']]['deaths'] = 0
+            AllSprites[dats['pid']]['kills'] = 0
 
         thing.pid = dats['pid']
         return
@@ -142,6 +146,8 @@ def GotWebsocketData( thing, data ):
         AllSprites[thing.pid]['dx'] = ourPlayer['dx']
         AllSprites[thing.pid]['dy'] = ourPlayer['dy']
     elif dats['op'] == 'respawn':
+        AllSprites[thing.pid]['deaths'] = 0;
+        AllSprites[thing.pid]['kills'] = 0;
         Respawn( thing.pid, dats['spec'] )
     elif dats['op'] == 'bul':
         f = random.random()*100000.0;
