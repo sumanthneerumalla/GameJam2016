@@ -28,6 +28,23 @@ var AllServer = {};
 // [id].timesinceserver
 var AllSprites = {};
 
+var ProjG = [];
+for (var i = 0;i <8;i++){
+	ProjG[i] = new Image();
+	ProjG[i].src = "images/ProjG" + i + ".png";
+}
+
+var ProjP = [];
+for (var i = 0;i <8;i++){
+	ProjP[i] = new Image();
+	ProjP[i].src = "images/ProjP" + i + ".png";
+}
+
+var ProjR = [];
+for (var i = 0;i <8;i++){
+	ProjR[i] = new Image();
+	ProjR[i].src = "images/ProjR" + i + ".png";
+}
 
 var mapCenterX = 0;
 var mapCenterY = 0;
@@ -65,8 +82,8 @@ function myMouseHandler(mouseX,mouseY) {
 
     var playerX = AllSprites[localStorage.pid].cx;
     var playerY = AllSprites[localStorage.pid].cy;
-    var dx = playerX - mouseX;
-    var dy = playerY - mouseY;
+    var dx =  mouseX -playerX;
+    var dy =  mouseY -playerY;
     var magnitude = 1.0/Math.sqrt(dx * dx + dy * dy) * bulletspeed;
     dx *= magnitude;
     dy *= magnitude;
@@ -314,7 +331,5 @@ AquilLeft.src = "images/AquilLeft.png";
 var AquilRight = new Image();
 AquilRight.src = "images/AquilRight.png";
 
+
 setTimeout( CommsLoop, 100 );
-
-
-
