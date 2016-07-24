@@ -48,6 +48,25 @@ addEventListener("keyup", function (e) {
 	userInputUpdate();
 }, false);
 
+addEventListener("mousedown", function (e) {
+    keysDown[e.keyCode] = true;
+    userInputUpdate();
+    var mouseX = event.pageX;
+    var mouseY = event.pageY;
+    myMouseHandler(mouseX,mouseY)
+},false);
+
+function myMouseHandler(mouseX,mouseY) {
+    var playerX = AllSprites[localStorage.pid]['x'];
+    var playerY = AllSprites[localStorage.pid]['y'];
+    var dx = playerX - mouseX;
+    var dy = playerY - mouseY;
+    var magnitude = Math.sqrt(dx * dx + dy * dy);
+    dx /= magnitude;
+    dy /= magnitude;
+    var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY};
+    QueueOperation(GetRequest, null );
+}
 // Game objects
 var player = {
     speed: 150,
@@ -81,7 +100,7 @@ function userInputUpdate() {
 
 	move(); // send the players recent direction changes to the server
 
-};
+}
 
 // Draw everything
 
@@ -139,7 +158,7 @@ function render() {
 
 		if (!spr.currentSprite ){
 			spr.currentSprite = LigDown;
-		} ;
+		}
 
 	    if ( (spr.dx > 0) && (spr.dy == 0) ){
 			spr.currentSprite = LigRight
