@@ -35,7 +35,7 @@ var mapCenterY = 0;
 var playerWidth = 100;
 var playerHeight = 100;
 
-
+var bulletspeed = 200;
 
 
 addEventListener("keydown", function (e) {
@@ -67,11 +67,10 @@ function myMouseHandler(mouseX,mouseY) {
     var playerY = AllSprites[localStorage.pid].cy;
     var dx = playerX - mouseX;
     var dy = playerY - mouseY;
-    var magnitude = Math.sqrt(dx * dx + dy * dy);
-    dx /= magnitude;
-    dy /= magnitude;
+    var magnitude = 1.0/Math.sqrt(dx * dx + dy * dy) * bulletspeed;
+    dx *= magnitude;
+    dy *= magnitude;
     var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY};
-	console.log( GetRequest );
     QueueOperation(GetRequest, null );
 }
 // Game objects
