@@ -177,6 +177,18 @@ function render() {
 		ctx.fillRect(spr.cx-mapofx+1-playerWidth/2, spr.cy-mapofy+1+playerHeight/2, playerWidth*spr.health/100.0, 14);
 	}
 
+	for( var key  in AllSprites )
+	{
+		var spr = AllSprites[key];
+		spr.timesinceserver += dtime/1000.0;
+
+		//Can only delete one element at a time
+		if( spr.timesinceserver > 2 )
+		{
+			delete AllSprites[key];
+			break;
+		}
+	}
 /*
 //	console.log( background );
 //	console.log( player );
