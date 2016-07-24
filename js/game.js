@@ -328,8 +328,10 @@ function GetallResponse( req, data )
 		if( sv.timeleft ) AllSprites[key].timeleft = sv.timeleft;
 		if( sv.health )
 		{
-			if ( sv.health != AllSprites[key.health]){
-				playEffect("hit");
+			if ( sv.health != AllSprites[key].health) {
+				if (key == localStorage.pid) {
+					playEffect("hit");
+				}
 			}
 			AllSprites[key].health = sv.health;
 			AllSprites[key].deaths = sv.deaths?sv.deaths:0;
