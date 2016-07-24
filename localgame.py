@@ -57,6 +57,12 @@ def StartGame():
     LastTickTime = StartTime
     TickEvent()
 
+def Respawn( pid ):
+    xStart = random.randrange(0, CanvasWidth, 1)
+    yStart = random.randrange(0, CanvasHeight, 1)
+    AllSprites[pid] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0, 'health': 100 }
+
+
 def UpdateAllSprites(AllSprites, DeltaTime):
     elements = [];
 
@@ -96,6 +102,8 @@ def UpdateAllSprites(AllSprites, DeltaTime):
             dist = math.sqrt((b['x']-p['x'])*(b['x']-p['x']) + (b['y']-p['y'])*(b['y']-p['y']))
             if dist < booletsize:
                 p['health'] -= 1
+                if( p['health'] <= 0 ):
+                    Respawn( pname )
 
 
 def GotWebsocketData( thing, data ):
@@ -110,9 +118,7 @@ def GotWebsocketData( thing, data ):
             AllSprites[dats['pid']] = AllSprites[thing.pid]
             del AllSprites[ thing.pid ];
         else:
-            xStart = random.randrange(0, CanvasWidth, 1)
-            yStart = random.randrange(0, CanvasHeight, 1)
-            AllSprites[dats['pid']] = { 'x':xStart, 'y':yStart, 'dx':0, 'dy':0, 'health':100 }
+            Respawn(dats['pid'])
 
         thing.pid = dats['pid']
         return
@@ -136,12 +142,10 @@ def GotWebsocketData( thing, data ):
         AllSprites[thing.pid]['dx'] = ourPlayer['dx']
         AllSprites[thing.pid]['dy'] = ourPlayer['dy']
     elif dats['op'] == 'respawn':
-        xStart = random.randrange(0, CanvasWidth, 1)
-        yStart = random.randrange(0, CanvasHeight, 1)
-        AllSprites[thing.pid] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0, 'health': 100 }
+        Respawn( thing.pid )
     elif dats['op'] == 'bul':
         f = random.random()*100000.0;
-        AllSprites[f] = { 'isboolet': True, 'timeleft': dats['time'], 'x': dats['x'], 'y': dats['y'], 'dx': dats['dx'], 'dy': dats['dy'], 'owner':thing.pid };
+        AllSprites[f] = { 'isboolet': True, 'timeleft': 10, 'x': dats['x'], 'y': dats['y'], 'dx': dats['dx'], 'dy': dats['dy'], 'owner':thing.pid };
 
 
     #print "You are: " + thing.pid
