@@ -33,11 +33,12 @@ var ImageArray = ["ProjG","ProjP","ProjO","Acer","Aquil","Lig"];
 for (var i = 0;i < ImageArray.length;i++){
 	var toLoad = ImageArray[i];
 	ImageDict[toLoad] = [];
-	for (var i = 0;i <8;i++){
-		ImageDict[toLoad][i] = new Image();
-		ImageDict[toLoad][i].src = "images/"+ toLoad + i + ".png";
+	for (var k = 0; k <8; k++){
+		ImageDict[toLoad][k] = new Image();
+		ImageDict[toLoad][k].src = "images/"+ toLoad + k + ".png";
 	}
 }
+//ImageDict[spr.sprite][0]
 
 var mapCenterX = 0;
 var mapCenterY = 0;
