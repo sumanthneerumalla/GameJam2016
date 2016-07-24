@@ -10,6 +10,7 @@ music.play();
 // Create the canvas
 var canvas;
 
+var titletime = 5;
 // Grab a reference to the canvas 2D context
 var ctx;
 
@@ -43,6 +44,11 @@ for (var i = 0;i < ImageArray.length;i++){
 		ImageDict[toLoad][k].src = "images/"+ toLoad + k + ".png";
 	}
 }
+
+var TitleScreen = new Image();
+TitleScreen.src = "images/TitleTransparentSmaller.png";
+
+
 //ImageDict[spr.sprite][0]
 
 var mapCenterX = 0;
@@ -84,7 +90,6 @@ function myMouseHandler(mouseX,mouseY) {
     var dy =  mouseY -playerY;
 
 	var spr = AllSprites[localStorage.pid].sprite;
-	console.log( spr );
 
 	var proj = "ProjG";
 	var time = 1.0;
@@ -164,6 +169,7 @@ function render() {
 
 	var ltime = n - starttime;
 	var dtime = n - lasttime;
+    if( dtime > 1000 ) dtime = 1000;
 	lasttime = n;
 
 	setTimeout( render, 16 );
@@ -272,6 +278,13 @@ function render() {
 			break;
 		}
 	}
+
+
+	titletime -= dtime/1000.0;
+	ctx.globalAlpha = (titletime>0)?titletime:0;
+	ctx.drawImage( TitleScreen, canvas.width/2-TitleScreen.width/2, canvas.height/2-TitleScreen.height/2 );
+	ctx.globalAlpha = 1.0;
+
 /*
 //	console.log( background );
 //	console.log( player );
