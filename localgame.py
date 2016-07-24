@@ -118,7 +118,7 @@ def GotWebsocketData( thing, data ):
             AllSprites[dats['pid']] = AllSprites[thing.pid]
             del AllSprites[ thing.pid ];
         else:
-            Respawn(dats['pid'], 'aquil' )
+            Respawn(dats['pid'], 'Aquil' )
 
         thing.pid = dats['pid']
         return
