@@ -7,12 +7,24 @@ import json
 import threading
 import time
 import math
+import random
 
 from ws4py.server.cherrypyserver import WebSocketPlugin, WebSocketTool
 from ws4py.websocket import WebSocket
 from ws4py.messaging import TextMessage
 
-AllPlayers = {}
+# TestSprite['x'] -> Position
+# TestSprite['y'] -> Position
+# TestSprite['dx'] > Speed
+# TestSprite['dy'] > Speed
+# TestSprite['sprite'] > Name of creature
+# 'health'
+# 'isboolet'
+# 'timeleft'  (IF bullet)
+# 'owner'  (IF bullet)
+AllSprites = {}
+
+booletsize = 200
 
 StartTime = 0.0
 TimeNow = 0.0
@@ -23,7 +35,7 @@ CanvasWidth = 4200
 CanvasHeight = 1800
 
 def TickEvent():
-    global StartTime, LastTickTime, AllPlayers
+    global StartTime, LastTickTime, AllSprites
     threading.Timer(0.1, TickEvent).start()
     TimeNow = time.time()
     DeltaTime = TimeNow - LastTickTime
@@ -36,8 +48,8 @@ def TickEvent():
     # TestSprite['dx'] = math.cos( TimeSinceStart );
     # TestSprite['dy'] = math.sin( TimeSinceStart );
     # TestSprite['sprite'] = 'Lig';
-    # AllPlayers['testsprite'] = TestSprite
-    UpdateAllPlayers(AllPlayers, DeltaTime)
+    # AllSprites['testsprite'] = TestSprite
+    UpdateAllSprites(AllSprites, DeltaTime)
 
 def StartGame():
     global StartTime, LastTickTime
@@ -45,18 +57,49 @@ def StartGame():
     LastTickTime = StartTime
     TickEvent()
 
-def UpdateAllPlayers(AllPlayers, DeltaTime):
-    for eachPlayer in AllPlayers:
-        # print AllPlayers[eachPlayer]
-        AllPlayers[eachPlayer]['x'] = AllPlayers[eachPlayer]['x'] + AllPlayers[eachPlayer]['dx'] * DeltaTime
-        print "distance to move in x is: ", AllPlayers[eachPlayer]['dx'] * DeltaTime
-        print "x location is : ", AllPlayers[eachPlayer]['x']
-        AllPlayers[eachPlayer]['y'] = AllPlayers[eachPlayer]['y'] + AllPlayers[eachPlayer]['dy'] * DeltaTime
-        print "distance to move in y is: ", AllPlayers[eachPlayer]['dy'] * DeltaTime
-        print "y location is : ", AllPlayers[eachPlayer]['y']
+def UpdateAllSprites(AllSprites, DeltaTime):
+    elements = [];
+
+    players = [];
+    boolets = [];
+
+    for spriteName in AllSprites:
+        elements.append( spriteName );
+        if( 'isboolet' in AllSprites[spriteName] and AllSprites[spriteName]['isboolet'] ):
+            boolets.append( spriteName )
+        else:
+            players.append( spriteName )
+
+    for e in elements:
+        spr = AllSprites[e];
+        spr['x'] = spr['x'] + spr['dx'] * DeltaTime
+        spr['y'] = spr['y'] + spr['dy'] * DeltaTime
+        if 'timeleft' in spr:
+            spr['timeleft']-=DeltaTime
+            if spr['timeleft'] < 0:
+                AllSprites.remove( e );
+                continue
+
+    for pname in players:
+        if not pname in AllSprites:
+            continue
+        p = AllSprites[pname];
+        for bname in boolets:
+            if not bname in AllSprites:
+                continue
+            b = AllSprites[bname];
+
+            #if the owner of the bullet is this player, then we don't want to interact with it.
+            if b['owner'] == pname:
+                continue;
+
+            dist = math.sqrt((b['x']-p['x'])*(b['x']-p['x']) + (b['y']-p['y'])*(b['y']-p['y']))
+            if dist < booletsize:
+                p['health'] -= 1
+
 
 def GotWebsocketData( thing, data ):
-    global AllPlayers
+    global AllSprites
     try:
         dats = json.loads( str(data) );
     except:
@@ -64,12 +107,12 @@ def GotWebsocketData( thing, data ):
 
     if 'pid' in dats:
     	if hasattr(thing, 'pid'):  #Handle renaming of players.
-            AllPlayers[dats['pid']] = AllPlayers[thing.pid]
-            del AllPlayers[ thing.pid ];
+            AllSprites[dats['pid']] = AllSprites[thing.pid]
+            del AllSprites[ thing.pid ];
         else:
             xStart = random.randrange(0, CanvasWidth, 1)
             yStart = random.randrange(0, CanvasHeight, 1)
-            AllPlayers[dats['pid']] = { 'x':xStart, 'y':yStart, 'dx':0, 'dy':0 }
+            AllSprites[dats['pid']] = { 'x':xStart, 'y':yStart, 'dx':0, 'dy':0, 'health':100 }
 
         thing.pid = dats['pid']
         return
@@ -81,7 +124,7 @@ def GotWebsocketData( thing, data ):
         print "No operation found for " + str(data);
 
     if dats['op'] == 'getall':
-       thing.send( json.dumps( AllPlayers ) );
+       thing.send( json.dumps( AllSprites ) );
        return;
     elif dats['op'] == 'makeMove':
         #calculate new location of the players move
@@ -90,13 +133,15 @@ def GotWebsocketData( thing, data ):
         ourPlayer['y'] = ourPlayer['y'] + ourPlayer['dy']
 
         #update all the sprite locations
-        AllPlayers[thing.pid]['dx'] = ourPlayer['dx']
-        AllPlayers[thing.pid]['dy'] = ourPlayer['dy']
-        print "move made"
+        AllSprites[thing.pid]['dx'] = ourPlayer['dx']
+        AllSprites[thing.pid]['dy'] = ourPlayer['dy']
     elif dats['op'] == 'respawn':
         xStart = random.randrange(0, CanvasWidth, 1)
         yStart = random.randrange(0, CanvasHeight, 1)
-        AllPlayers[dats['pid']] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0}
+        AllSprites[thing.pid] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0, 'health': 100 }
+    elif dats['op'] == 'bul':
+        f = random.random()*100000.0;
+        AllSprites[f] = { 'isboolet': True, 'lifeleft': 10, 'x': dats['x'], 'y': dats['y'], 'dx': dats['dx'], 'dy': dats['dy'], 'owner':thing.pid };
 
 
     #print "You are: " + thing.pid
