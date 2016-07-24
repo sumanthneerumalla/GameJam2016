@@ -68,6 +68,7 @@ def Respawn( pid, species ):
         AllSprites[pid]['dx'] = 0;
         AllSprites[pid]['dy'] = 0;
         AllSprites[pid]['health'] = 100;
+        AllSprites[pid]['sprite'] = species;
 
 
 def UpdateAllSprites(AllSprites, DeltaTime):
