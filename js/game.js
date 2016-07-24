@@ -57,8 +57,12 @@ addEventListener("mousedown", function (e) {
 },false);
 
 function myMouseHandler(mouseX,mouseY) {
-    var playerX = AllSprites[localStorage.pid]['x'];
-    var playerY = AllSprites[localStorage.pid]['y'];
+    if (!AllSprites[localStorage.pid]){
+        return
+    }
+    console.log(AllSprites[localStorage.pid]);
+    var playerX = AllSprites[localStorage.pid].x;
+    var playerY = AllSprites[localStorage.pid].y;
     var dx = playerX - mouseX;
     var dy = playerY - mouseY;
     var magnitude = Math.sqrt(dx * dx + dy * dy);
