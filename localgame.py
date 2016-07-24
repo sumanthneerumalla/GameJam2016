@@ -145,7 +145,7 @@ def GotWebsocketData( thing, data ):
         Respawn( thing.pid )
     elif dats['op'] == 'bul':
         f = random.random()*100000.0;
-        AllSprites[f] = { 'isboolet': True, 'timeleft': 10, 'x': dats['x'], 'y': dats['y'], 'dx': dats['dx'], 'dy': dats['dy'], 'owner':thing.pid };
+        AllSprites[f] = { 'isboolet': True, 'timeleft': dats['time'], 'x': dats['x'], 'y': dats['y'], 'dx': dats['dx'], 'dy': dats['dy'], 'owner':thing.pid };
 
 
     #print "You are: " + thing.pid
