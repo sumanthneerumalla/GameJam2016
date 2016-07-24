@@ -272,6 +272,11 @@ function GetallResponse( req, data )
 		var iir = 0.6; //Slowness
 		var sv = AllServer[key];
 		if( !( key in AllSprites ) ) AllSprites[key] = { cx: sv.x, cy: sv.y };
+
+		var distx = AllSprites[key].cx - sv.x;
+		var disty = AllSprites[key].cy - sv.y;
+		if( Math.sqrt( distx * distx + disty * disty ) > 200 ) iir = 0.0;
+
 		AllSprites[key].cx = AllSprites[key].cx * (iir) + sv.x * (1.-iir);
 		AllSprites[key].cy = AllSprites[key].cy * (iir) + sv.y * (1.-iir);
 		AllSprites[key].dx = sv.dx;
