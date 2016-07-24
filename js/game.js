@@ -70,7 +70,7 @@ function myMouseHandler(mouseX,mouseY) {
     var magnitude = 1.0/Math.sqrt(dx * dx + dy * dy) * bulletspeed;
     dx *= magnitude;
     dy *= magnitude;
-    var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY};
+    var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY, time:1.0};
     QueueOperation(GetRequest, null );
 }
 // Game objects
@@ -261,6 +261,7 @@ function GetallResponse( req, data )
 		AllSprites[key].dy = sv.dy;
 		AllSprites[key].sprite = sv.sprite;
 		AllSprites[key].timesinceserver = 0;
+		if( sv.timeleft ) AllSprites[key].timeleft = sv.timeleft;
 		if( sv.health ) AllSprites[key].health = sv.health;
 	}
 }
