@@ -34,8 +34,10 @@ TimeSinceStart = 0.0
 CanvasWidth = 4200
 CanvasHeight = 1800
 
+TimeSinceEgg = 0
+
 def TickEvent():
-    global StartTime, LastTickTime, AllSprites
+    global StartTime, LastTickTime, AllSprites, TimeSinceEgg
     threading.Timer(0.1, TickEvent).start()
     TimeNow = time.time()
     DeltaTime = TimeNow - LastTickTime
@@ -51,11 +53,23 @@ def TickEvent():
     # AllSprites['testsprite'] = TestSprite
     UpdateAllSprites(AllSprites, DeltaTime)
 
+    TimeSinceEgg += DeltaTime;
+    if( TimeSinceEgg > 1.0 ):
+        SpawnEgg()
+        TimeSinceEgg = 0
+
 def StartGame():
     global StartTime, LastTickTime
     StartTime = time.time()
     LastTickTime = StartTime
     TickEvent()
+
+def SpawnEgg():
+    f = random.random()*100000.0;
+    xStart = random.randrange(0, CanvasWidth, 1)
+    yStart = random.randrange(0, CanvasHeight, 1)
+    AllSprites[f] = { 'sprite':'egg', 'isboolet': False, 'isegg': True, 'timeleft':20, 'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0 };
+
 
 def Respawn( pid, species ):
     xStart = random.randrange(0, CanvasWidth, 1)

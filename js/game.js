@@ -35,7 +35,7 @@ var AllServer = {};
 var AllSprites = {};
 
 var ImageDict = {};
-var ImageArray = ["ProjG","ProjP","ProjO","Acer","Aquil","Lig"];
+var ImageArray = ["ProjG","ProjP","ProjO","Acer","Aquil","Lig","egg"];
 for (var i = 0;i < ImageArray.length;i++){
 	var toLoad = ImageArray[i];
 	ImageDict[toLoad] = [];
