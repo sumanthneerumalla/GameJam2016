@@ -81,7 +81,7 @@ function myMouseHandler(mouseX,mouseY) {
     var magnitude = 1.0/Math.sqrt(dx * dx + dy * dy) * bulletspeed;
     dx *= magnitude;
     dy *= magnitude;
-    var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY, time:1.0};
+    var GetRequest = { op:'bul', dx: dx, dy:dy, x: playerX, y:playerY, time:1.0, spr:'ProjG'};
     QueueOperation(GetRequest, null );
 }
 // Game objects
@@ -193,6 +193,7 @@ function render() {
 		// 	spr.currentSprite = LigDown
 		// }
 
+		console.log( spr.sprite );
 	    ctx.drawImage(ImageDict[spr.sprite][0], spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
 
 		//console.log( key );
