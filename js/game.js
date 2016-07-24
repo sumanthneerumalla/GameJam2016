@@ -198,7 +198,8 @@ function render() {
 		console.log(angle);
 		angle = Math.round(angle+faces)%faces;
 
-	    ctx.drawImage(ImageDict[spr.sprite][angle], spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
+		if( ImageDict[spr.sprite] )
+		    ctx.drawImage(ImageDict[spr.sprite][angle], spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
 
 	}
 
