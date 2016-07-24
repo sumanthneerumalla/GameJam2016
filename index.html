@@ -20,14 +20,12 @@
           overflow: hidden;
 		}
 		#ninput { -moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none; color:White }
-		#leaderboard { position: absolute; right: 100px }
+		#leaderboard { position: relative; float:right; top:0; right:0; color:white;-moz-user-select: none; -webkit-user-select: none; -ms-user-select:none; user-select:none;-o-user-select:none;  }
         body, a:hover {cursor: url(http://cur.cursors-4u.net/others/oth-7/oth693.cur), progress !important;}
     </style>
 </head>
 <body>
 <div id=ninput>Name: <INPUT type=text id=PlayerName><BR>
-<div id=leaderboard> ... </div>
-
 <INPUT type=submit id=RespawnButton value=Respawn>
  <select id="chooseSpecies">
   <option value="Lig">Lig</option>
@@ -35,6 +33,8 @@
   <option value="Acer">Acer</option>
 </select> 
 </div>
+<div id=leaderboard> ... </div>
+
 <canvas id="myCanvas"></canvas>
 
 <img class="hiddenImage" id="background" src="images/trees.jpg">

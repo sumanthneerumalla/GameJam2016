@@ -303,6 +303,9 @@ function gameload() {
 function GetallResponse( req, data )
 {
 	AllServer = JSON.parse( data );
+
+    var Players = [];
+
 	for( var key in AllServer )
 	{
 		var iir = 0.6; //Slowness
@@ -320,11 +323,26 @@ function GetallResponse( req, data )
 		AllSprites[key].sprite = sv.sprite;
 		AllSprites[key].timesinceserver = 0;
 		if( sv.timeleft ) AllSprites[key].timeleft = sv.timeleft;
-		if ( sv.health != AllSprites[key.health]){
-			hit.play();
+		if( sv.health )
+		{
+			if ( sv.health != AllSprites[key.health]){
+				hit.play();
+			}
+			AllSprites[key].health = sv.health;
+			AllSprites[key].deaths = sv.deaths?sv.deaths:0;
+			AllSprites[key].kills = sv.kills?sv.kills:0;
+			var p = AllSprites[key];
+			p.pname = key;
+			Players.push( p );
 		}
-		if( sv.health ) AllSprites[key].health = sv.health;
 	}
+
+	Players.sort( function( a, b )
+	{
+		 
+	} );
+
+	
 }
 
 function move(){
