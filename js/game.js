@@ -51,8 +51,8 @@ addEventListener("keyup", function (e) {
 addEventListener("mousedown", function (e) {
     keysDown[e.keyCode] = true;
     userInputUpdate();
-    var mouseX = event.pageX;
-    var mouseY = event.pageY;
+    var mouseX = e.pageX;
+    var mouseY = e.pageY;
     myMouseHandler(mouseX,mouseY)
 },false);
 
