@@ -24,7 +24,8 @@ from ws4py.messaging import TextMessage
 # 'owner'  (IF bullet)
 AllSprites = {}
 
-booletsize = 200
+booletsize = 120
+eggsize = 120
 
 StartTime = 0.0
 TimeNow = 0.0
@@ -90,11 +91,14 @@ def UpdateAllSprites(AllSprites, DeltaTime):
 
     players = [];
     boolets = [];
+    eggs = [];
 
     for spriteName in AllSprites:
         elements.append( spriteName );
         if( 'isboolet' in AllSprites[spriteName] and AllSprites[spriteName]['isboolet'] ):
             boolets.append( spriteName )
+        elif( 'isegg' in AllSprites[spriteName] and AllSprites[spriteName]['isegg'] ):
+            eggs.append( spriteName )
         else:
             players.append( spriteName )
 
@@ -120,6 +124,17 @@ def UpdateAllSprites(AllSprites, DeltaTime):
             p['x'] = CanvasWidth; 
         if( p['y'] > CanvasHeight ):
             p['y'] = CanvasHeight; 
+
+        for ename in eggs:
+            if not ename in AllSprites:
+                continue
+            e = AllSprites[ename];
+            dist = math.sqrt((e['x']-p['x'])*(e['x']-p['x']) + (e['y']-p['y'])*(e['y']-p['y']))
+            if dist < eggsize and e['timeleft'] > 0:
+                p['health'] += 25
+                e['timeleft'] = 0
+                if p['health'] > 100:
+                    p['health'] = 100
 
         for bname in boolets:
             if not bname in AllSprites:
