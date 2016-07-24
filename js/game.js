@@ -223,10 +223,13 @@ function render() {
 		// else{
 		// 	spr.currentSprite = LigDown
 		// }
-		var faces;
-		faces = (spr.timeleft)? 8:4;
-		var angle = Math.atan2(-spr.dy,spr.dx)/3.14159/2*faces;
-		angle = Math.round(angle+faces)%faces;
+		// var faces;
+		// faces = (spr.timeleft)? 8:4;
+		// var angle = Math.atan2(-spr.dy,spr.dx)/3.14159/2*faces;
+		// angle = Math.round(angle+faces)%faces;
+		if (spr.timeleft){
+			angle = Math.atan2(-spr.dy,spr.dx);
+		}
 
 		try {		
 		    ctx.drawImage(ImageDict[spr.sprite][angle], spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
