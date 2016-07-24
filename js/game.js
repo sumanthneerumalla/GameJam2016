@@ -65,8 +65,8 @@ function myMouseHandler(mouseX,mouseY) {
 
     var playerX = AllSprites[localStorage.pid].cx;
     var playerY = AllSprites[localStorage.pid].cy;
-    var dx = playerX - mouseX;
-    var dy = playerY - mouseY;
+    var dx =  mouseX -playerX;
+    var dy =  mouseY -playerY;
     var magnitude = 1.0/Math.sqrt(dx * dx + dy * dy) * bulletspeed;
     dx *= magnitude;
     dy *= magnitude;
@@ -305,6 +305,9 @@ AquilLeft.src = "images/AquilLeft.png";
 
 var AquilRight = new Image();
 AquilRight.src = "images/AquilRight.png";
+
+var ProjGLeft = new Image();
+
 
 setTimeout( CommsLoop, 100 );
 
