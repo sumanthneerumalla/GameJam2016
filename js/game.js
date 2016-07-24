@@ -336,15 +336,26 @@ function GetallResponse( req, data )
 			AllSprites[key].kills = sv.kills?sv.kills:0;
 			var p = AllSprites[key];
 			p.pname = key;
+			p.kdr = p.kills / (p.deaths+1);
 			Players.push( p );
 		}
 	}
 
 	Players.sort( function( a, b )
 	{
-		 
+		var kdrA = a.kills/(a.deaths+1);
+		var kdrB = b.kills/(b.deaths+1);
+		return kdrA < kdrB;
 	} );
-
+	var lb = "<TABLE border=1>";
+	lb += "<TR><TH>Name</TH><TH>Kills</TH><TH>Deaths</TH></TR>"
+	for( var i = 0; i < Players.length; i++ )
+	{
+		var p = Players[i];
+		lb += "<TR><TD>" + p.pname + "</TD><TD>" + p.kills + "</TD><TD>" + p.deaths + "</TD></TR>";
+	}
+	lb += "</TABLE>";
+	$("#leaderboard").html( lb );
 	
 }
 

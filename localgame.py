@@ -60,7 +60,14 @@ def StartGame():
 def Respawn( pid, species ):
     xStart = random.randrange(0, CanvasWidth, 1)
     yStart = random.randrange(0, CanvasHeight, 1)
-    AllSprites[pid] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0, 'health': 100, 'sprite':species }
+    if not pid in AllSprites:
+        AllSprites[pid] = {'x': xStart, 'y': yStart, 'dx': 0, 'dy': 0, 'health': 100, 'sprite':species }
+    else:
+        AllSprites[pid]['x'] = xStart;
+        AllSprites[pid]['y'] = yStart;
+        AllSprites[pid]['dx'] = 0;
+        AllSprites[pid]['dy'] = 0;
+        AllSprites[pid]['health'] = 100;
 
 
 def UpdateAllSprites(AllSprites, DeltaTime):
@@ -109,6 +116,7 @@ def UpdateAllSprites(AllSprites, DeltaTime):
                     if not 'kills' in AllSprites[b['owner']]:
                        AllSprites[b['owner']]['kills'] = 0
                     AllSprites[b['owner']]['kills'] = AllSprites[b['owner']]['kills']+1
+                    print b['owner'] + " killed " + pname
                     Respawn( pname, AllSprites[pname]['sprite'] )
 
 
