@@ -97,6 +97,15 @@ def UpdateAllSprites(AllSprites, DeltaTime):
         if not pname in AllSprites:
             continue
         p = AllSprites[pname];
+        if( p['x'] < 0 ):
+            p['x'] = 0; 
+        if( p['y'] < 0 ):
+            p['y'] = 0; 
+        if( p['x'] > CanvasWidth ):
+            p['x'] = CanvasWidth; 
+        if( p['y'] > CanvasHeight ):
+            p['y'] = CanvasHeight; 
+
         for bname in boolets:
             if not bname in AllSprites:
                 continue
