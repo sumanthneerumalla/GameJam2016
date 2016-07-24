@@ -28,22 +28,15 @@ var AllServer = {};
 // [id].timesinceserver
 var AllSprites = {};
 
-var ProjG = [];
-for (var i = 0;i <8;i++){
-	ProjG[i] = new Image();
-	ProjG[i].src = "images/ProjG" + i + ".png";
-}
-
-var ProjP = [];
-for (var i = 0;i <8;i++){
-	ProjP[i] = new Image();
-	ProjP[i].src = "images/ProjP" + i + ".png";
-}
-
-var ProjR = [];
-for (var i = 0;i <8;i++){
-	ProjR[i] = new Image();
-	ProjR[i].src = "images/ProjR" + i + ".png";
+var ImageDict = {};
+var ImageArray = ["ProjG","ProjP","ProjO","Acer","Aquil","Lig"];
+for (var i = 0;i < ImageArray.length;i++){
+	var toLoad = ImageArray[i];
+	ImageDict[toLoad] = [];
+	for (var i = 0;i <8;i++){
+		ImageDict[toLoad][i] = new Image();
+		ImageDict[toLoad][i].src = "images/"+ toLoad + i + ".png";
+	}
 }
 
 var mapCenterX = 0;
@@ -179,27 +172,27 @@ function render() {
 		spr.cx += spr.dx * dtime/1000.0;
 		spr.cy += spr.dy * dtime/1000.0;
 
-		if (!spr.currentSprite ){
-			spr.currentSprite = LigDown;
-		}
+		// if (!spr.currentSprite ){
+		// 	spr.currentSprite = LigDown;
+		// }
+        //
+        // if ( (spr.dx > 0) && (spr.dy == 0) ){
+		// 	spr.currentSprite = LigRight
+		// }
+		// else if( (spr.dx <0) && (spr.dy == 0)){
+		// 	spr.currentSprite = LigLeft
+		// }
+		// else if( (spr.dy > 0) && (spr.dx == 0) ){
+		// 	spr.currentSprite = LigDown
+		// }
+		// else if( (spr.dy <0) && (spr.dx == 0)){
+		// 	spr.currentSprite = LigUp
+		// }
+		// else{
+		// 	spr.currentSprite = LigDown
+		// }
 
-	    if ( (spr.dx > 0) && (spr.dy == 0) ){
-			spr.currentSprite = LigRight
-		}
-		else if( (spr.dx <0) && (spr.dy == 0)){
-			spr.currentSprite = LigLeft
-		}
-		else if( (spr.dy > 0) && (spr.dx == 0) ){
-			spr.currentSprite = LigDown
-		}
-		else if( (spr.dy <0) && (spr.dx == 0)){
-			spr.currentSprite = LigUp
-		}
-		else{
-			spr.currentSprite = LigDown
-		}
-
-	    ctx.drawImage(spr.currentSprite, spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
+	    ctx.drawImage(ImageDict[spr.sprite][0], spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
 
 		//console.log( key );
 	}
@@ -230,7 +223,6 @@ function render() {
 			spr.timeleft -= dtime/1000.0;
 			timeleft = spr.timeleft;
 		}
-
 		//Can only delete one element at a time
 		if( spr.timesinceserver > 2 || timeleft < 0 )
 		{
@@ -311,30 +303,5 @@ function CommsLoop()
 
 var BackGround = new Image();
 BackGround.src = "images/treesBIGGER.jpg";
-
-var LigDown = new Image();
-LigDown.src = "images/LigDown.png";
-
-var LigUp = new Image();
-LigUp.src = "images/LigUp.png";
-
-var LigLeft = new Image();
-LigLeft.src = "images/LigLeft.png";
-
-var LigRight = new Image();
-LigRight.src = "images/LigRight.png";
-
-var AquilDown = new Image();
-AquilDown.src = "images/AquilDown.png";
-
-var AquilUp = new Image();
-AquilUp.src = "images/AquilUp.png";
-
-var AquilLeft = new Image ();
-AquilLeft.src = "images/AquilLeft.png";
-
-var AquilRight = new Image();
-AquilRight.src = "images/AquilRight.png";
-
 
 setTimeout( CommsLoop, 100 );
