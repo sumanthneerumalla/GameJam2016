@@ -195,11 +195,13 @@ function render() {
 		var faces;
 		faces = (spr.timeleft)? 8:4;
 		var angle = Math.atan2(-spr.dy,spr.dx)/3.14159/2*faces;
-		console.log(angle);
 		angle = Math.round(angle+faces)%faces;
 
-		if( ImageDict[spr.sprite] )
+		try {		
 		    ctx.drawImage(ImageDict[spr.sprite][angle], spr.cx-mapofx-playerWidth/2, spr.cy-mapofy-playerHeight/2 );
+		} catch(e)
+		{
+		}
 
 	}
 
