@@ -281,7 +281,7 @@ function render() {
 	}
 
 
-	titletime -= dtime/1000.0;
+	titletime -= dtime/500.0;
 	ctx.globalAlpha = (titletime>0)?titletime:0;
 	ctx.drawImage( TitleScreen, canvas.width/2-TitleScreen.width/2, canvas.height/2-TitleScreen.height/2 );
 	ctx.globalAlpha = 1.0;

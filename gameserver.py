@@ -1,4 +1,4 @@
-#!../homebrew/bin/python
+#!../python.exe
 
 # -*- coding: utf-8 -*-
 import argparse
