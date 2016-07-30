@@ -93,11 +93,19 @@ def UpdateAllSprites(AllSprites, DeltaTime):
     boolets = [];
     eggs = [];
 
-#rename spritename if its too long and to protect against js injection
+#rename spriteName if its too long and to protect against js injection
     for spriteName in AllSprites:
-    	if (len(str((spriteName))) >15):
-    		AllSprites[str(spriteName)[0:15]] = AllSprites.pop(spriteName)
-    
+    #only shorten sprite name if its a string that the user entered
+       if (type(spriteName) == type("string")):
+       #and then only if its longer than 15 char
+        if (len(str((spriteName))) >15):
+          newName = str(spriteName)[0:15].replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+          AllSprites[newName] = AllSprites.pop(spriteName)
+        else:
+        #otherwise only sanitize the input
+          newName = str(spriteName).replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+          AllSprites[newName] = AllSprites.pop(spriteName)
+      
     for spriteName in AllSprites:
         elements.append( spriteName );
         if( 'isboolet' in AllSprites[spriteName] and AllSprites[spriteName]['isboolet'] ):
