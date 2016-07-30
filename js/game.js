@@ -371,7 +371,7 @@ function GetallResponse( req, data )
 	for( var i = 0; i < Players.length; i++ )
 	{
 		var p = Players[i];
-		lb += "<TR><TD>" + p.pname + "</TD><TD>" + p.kills + "</TD><TD>" + p.deaths + "</TD></TR>";
+		lb += "<TR><TD>" + "<pre>" +p.pname + "</TD><TD>" + p.kills + "</TD><TD>" + p.deaths + "</TD></TR>";
 	}
 	lb += "</TABLE>";
 	$("#leaderboard").html( lb );
