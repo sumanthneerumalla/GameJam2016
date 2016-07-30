@@ -95,8 +95,8 @@ def UpdateAllSprites(AllSprites, DeltaTime):
 
 #rename spritename if its too long and to protect against js injection
     for spriteName in AllSprites:
-    	if (len(spriteName) >15):
-    		AllSprites[spriteName[0:15]] = AllSprites.pop(spriteName)
+    	if (len(str((spriteName))) >15):
+    		AllSprites[str(spriteName)[0:15]] = AllSprites.pop(spriteName)
     
     for spriteName in AllSprites:
         elements.append( spriteName );
@@ -117,11 +117,10 @@ def UpdateAllSprites(AllSprites, DeltaTime):
                 del AllSprites[ e ];
                 continue
 
+#keep players within bounds of canvas
     for pname in players:
         if not pname in AllSprites:
             continue
-        if len(pname) >15:
-        	pname = pname
         p = AllSprites[pname];
         if( p['x'] < 0 ):
             p['x'] = 0; 
