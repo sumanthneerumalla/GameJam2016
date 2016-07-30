@@ -1,6 +1,8 @@
 #What Is This?
 
-This is a real time multiplayer web browser game developed at the annual UMBC Game Jam. It was inspired by Agar.io, Slither.io, and Diep.io
+This is a real time multiplayer web browser game developed at the annual UMBC Game Jam. It was inspired by Agar.io, Slither.io, and Diep.io. 
+
+It doesn't look 100% polished, but all the art assets were made from scratch, and this was a first attempt. If you have any feedback or ideas for improvement please tweet or contact me at my email address: [sz60171@umbc.edu](mailto:sz60171@umbc.edu)
 
 #How Do I Play?
 
