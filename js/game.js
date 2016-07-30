@@ -374,6 +374,9 @@ function GetallResponse( req, data )
 		if (p.pname.length > 15) {
 			name= p.pname.substring(0,15);
 		}
+		else{
+			name = p.pname;
+		}
 		lb += "<TR><TD>" + "<pre>" + name + "</pre>" + "</TD><TD>" + p.kills + "</TD><TD>" + p.deaths + "</TD></TR>";
 	}
 	lb += "</TABLE>";
