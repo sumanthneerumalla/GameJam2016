@@ -93,6 +93,11 @@ def UpdateAllSprites(AllSprites, DeltaTime):
     boolets = [];
     eggs = [];
 
+#rename spritename if its too long and to protect against js injection
+    for spriteName in AllSprites:
+    	if (len(spriteName) >15):
+    		AllSprites[spriteName[0:15]] = AllSprites.pop(spriteName)
+    
     for spriteName in AllSprites:
         elements.append( spriteName );
         if( 'isboolet' in AllSprites[spriteName] and AllSprites[spriteName]['isboolet'] ):
@@ -115,6 +120,8 @@ def UpdateAllSprites(AllSprites, DeltaTime):
     for pname in players:
         if not pname in AllSprites:
             continue
+        if len(pname) >15:
+        	pname = pname
         p = AllSprites[pname];
         if( p['x'] < 0 ):
             p['x'] = 0; 
