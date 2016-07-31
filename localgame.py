@@ -188,22 +188,22 @@ def UpdateAllSprites(AllSprites, DeltaTime):
 def GotWebsocketData( thing, data ):
   global AllSprites
   try:
-      dats = json.loads( str(data) );
+    dats = json.loads( str(data) );
   except:
-      return
+    return
 
   if 'pid' in dats:
     if hasattr(thing, 'pid'):  #Handle renaming of players, remembering to sanitize input
-          newName = sanitize(dats['pid'])
-          AllSprites[newName] = AllSprites[thing.pid]
-          print "Player " + thing.pid + "changed their name to: "+ newName
-          del AllSprites[ thing.pid ];
-      else:
-          Respawn(dats['pid'], 'Lig' )
-          AllSprites[dats['pid']]['deaths'] = 0
-          AllSprites[dats['pid']]['kills'] = 0
+      newName = sanitize(dats['pid'])
+      AllSprites[newName] = AllSprites[thing.pid]
+      print "Player " + thing.pid + "changed their name to: "+ newName
+      del AllSprites[ thing.pid ];
+    else:
+      Respawn(dats['pid'], 'Lig' )
+      AllSprites[dats['pid']]['deaths'] = 0
+      AllSprites[dats['pid']]['kills'] = 0
 
-      thing.pid = dats['pid']
+    thing.pid = dats['pid']
       return
 
   if not hasattr(thing, 'pid'):
