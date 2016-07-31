@@ -195,7 +195,7 @@ def GotWebsocketData( thing, data ):
   if 'pid' in dats:
     if hasattr(thing, 'pid'):  #Handle renaming of players, remembering to sanitize input
           newName = sanitize(dats['pid']
-          AllSprites[newName)] = AllSprites[thing.pid]
+          AllSprites[newName] = AllSprites[thing.pid]
           print "Player " + thing.pid + "changed their name to: "+ newName
           del AllSprites[ thing.pid ];
       else:
