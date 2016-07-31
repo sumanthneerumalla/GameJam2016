@@ -186,55 +186,58 @@ def UpdateAllSprites(AllSprites, DeltaTime):
 
 
 def GotWebsocketData( thing, data ):
-    global AllSprites
-    try:
-        dats = json.loads( str(data) );
-    except:
-        return
+  global AllSprites
+  try:
+      dats = json.loads( str(data) );
+  except:
+      return
 
-    if 'pid' in dats:
-    	if hasattr(thing, 'pid'):  #Handle renaming of players, remembering to sanitize input
-        
-            AllSprites[sanitize(dats['pid'])] = AllSprites[thing.pid]
-            del AllSprites[ thing.pid ];
-        else:
-            Respawn(dats['pid'], 'Lig' )
-            AllSprites[dats['pid']]['deaths'] = 0
-            AllSprites[dats['pid']]['kills'] = 0
+  if 'pid' in dats:
+    if hasattr(thing, 'pid'):  #Handle renaming of players, remembering to sanitize input
+          newName = sanitize(dats['pid']
+          AllSprites[newName)] = AllSprites[thing.pid]
+          print "Player " + thing.pid + "changed their name to: "+ newName
+          del AllSprites[ thing.pid ];
+      else:
+          Respawn(dats['pid'], 'Lig' )
+          AllSprites[dats['pid']]['deaths'] = 0
+          AllSprites[dats['pid']]['kills'] = 0
 
-        thing.pid = dats['pid']
-        return
+      thing.pid = dats['pid']
+      return
 
-    if not hasattr(thing, 'pid'):
-        return;
+  if not hasattr(thing, 'pid'):
+      return;
 
-    if not 'op' in dats:
-        print "No operation found for " + str(data);
+  if not 'op' in dats:
+      print "No operation found for " + str(data);
 
-    if dats['op'] == 'getall':
-       thing.send( json.dumps( AllSprites) );
-       return;
-    elif dats['op'] == 'makeMove':
-        #calculate new location of the players move
-        ourPlayer = dats['p']
-        ourPlayer['x'] = ourPlayer['x'] + ourPlayer['dx']
-        ourPlayer['y'] = ourPlayer['y'] + ourPlayer['dy']
+  if dats['op'] == 'getall':
+     thing.send( json.dumps( AllSprites) );
+     return;
+  elif dats['op'] == 'makeMove':
+      #calculate new location of the players move
+      ourPlayer = dats['p']
+      ourPlayer['x'] = ourPlayer['x'] + ourPlayer['dx']
+      ourPlayer['y'] = ourPlayer['y'] + ourPlayer['dy']
 
-        #update all the sprite locations
-        AllSprites[thing.pid]['dx'] = ourPlayer['dx']
-        AllSprites[thing.pid]['dy'] = ourPlayer['dy']
-    elif dats['op'] == 'respawn':
-        AllSprites[thing.pid]['deaths'] = 0
-        AllSprites[thing.pid]['kills'] = 0
-        Respawn( thing.pid, dats['spec'] )
-    elif dats['op'] == 'bul':
-        f = random.random()*100000.0;
-        AllSprites[f] = { 'sprite':dats['spr'], 'isboolet': True, 'timeleft': dats['time'], 'x': dats['x'], 'y': dats['y'], 'dx': dats['dx'], 'dy': dats['dy'], 'owner':thing.pid };
+      #update all the sprite locations
+      AllSprites[thing.pid]['dx'] = ourPlayer['dx']
+      AllSprites[thing.pid]['dy'] = ourPlayer['dy']
+  elif dats['op'] == 'respawn':
+      AllSprites[thing.pid]['deaths'] = 0
+      AllSprites[thing.pid]['kills'] = 0
+      Respawn( thing.pid, dats['spec'] )
+  elif dats['op'] == 'bul':
+      f = random.random()*100000.0;
+      AllSprites[f] = { 'sprite':dats['spr'], 'isboolet': True, 'timeleft': dats['time'], 'x': dats['x'], 'y': dats['y'], 'dx': dats['dx'], 'dy': dats['dy'], 'owner':thing.pid };
+  
+  print AllSprites
 
 
-    #print "You are: " + thing.pid
-    #for each in dats:
-    #    print each + ' = ' + str( dats[each] )
-	#thing.send( "response" );
+  #print "You are: " + thing.pid
+  #for each in dats:
+  #    print each + ' = ' + str( dats[each] )
+#thing.send( "response" );
 
 

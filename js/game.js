@@ -377,7 +377,7 @@ function GetallResponse( req, data )
 		else{
 			name = p.pname;
 		}
-		lb += "<TR><TD>" + "<pre>" + name + "</pre>" + "</TD><TD>" + p.kills + "</TD><TD>" + p.deaths + "</TD></TR>";
+		lb += "<TR><TD>" + name + "</TD><TD>" + p.kills + "</TD><TD>" + p.deaths + "</TD></TR>";
 	}
 	lb += "</TABLE>";
 	$("#leaderboard").html( lb );
