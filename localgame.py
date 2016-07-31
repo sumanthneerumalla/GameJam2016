@@ -204,7 +204,7 @@ def GotWebsocketData( thing, data ):
       AllSprites[dats['pid']]['kills'] = 0
 
     thing.pid = dats['pid']
-      return
+    return
 
   if not hasattr(thing, 'pid'):
       return;
