@@ -58,6 +58,18 @@ def TickEvent():
     if( TimeSinceEgg > 2.0 ):
         SpawnEgg()
         TimeSinceEgg = 0
+        
+def sanitize(someString):
+  #sanitize only if its a string
+  newName = someString
+  if (type(someString) == type("string")):
+         #and then only if its longer than 15 char
+          if (len(str((someString))) >15):
+            newName = str(someString)[0:15].replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+          else:
+          #otherwise only sanitize the input
+            newName = str(someString).replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+  return newName
 
 def StartGame():
     global StartTime, LastTickTime
@@ -93,18 +105,18 @@ def UpdateAllSprites(AllSprites, DeltaTime):
     boolets = [];
     eggs = [];
 
-#rename spriteName if its too long and to protect against js injection
-    for spriteName in AllSprites:
-    #only shorten sprite name if its a string that the user entered
-       if (type(spriteName) == type("string")):
-       #and then only if its longer than 15 char
-        if (len(str((spriteName))) >15):
-          newName = str(spriteName)[0:15].replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
-          AllSprites[newName] = AllSprites.pop(spriteName)
-        else:
-        #otherwise only sanitize the input
-          newName = str(spriteName).replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
-          AllSprites[newName] = AllSprites.pop(spriteName)
+# #rename spriteName if its too long and to protect against js injection
+    # for spriteName in AllSprites:
+    # #only shorten sprite name if its a string that the user entered
+       # if (type(spriteName) == type("string")):
+       # #and then only if its longer than 15 char
+        # if (len(str((spriteName))) >15):
+          # newName = str(spriteName)[0:15].replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+          # AllSprites[newName] = AllSprites.pop(spriteName)
+        # else:
+        # #otherwise only sanitize the input
+          # newName = str(spriteName).replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+          # AllSprites[newName] = AllSprites.pop(spriteName)
       
     for spriteName in AllSprites:
         elements.append( spriteName );
@@ -125,7 +137,7 @@ def UpdateAllSprites(AllSprites, DeltaTime):
                 del AllSprites[ e ];
                 continue
 
-#keep players within bounds of canvas
+    #keep players within bounds of canvas
     for pname in players:
         if not pname in AllSprites:
             continue
@@ -181,8 +193,9 @@ def GotWebsocketData( thing, data ):
         return
 
     if 'pid' in dats:
-    	if hasattr(thing, 'pid'):  #Handle renaming of players.
-            AllSprites[dats['pid']] = AllSprites[thing.pid]
+    	if hasattr(thing, 'pid'):  #Handle renaming of players, remembering to sanitize input
+        
+            AllSprites[sanitize(dats['pid'])] = AllSprites[thing.pid]
             del AllSprites[ thing.pid ];
         else:
             Respawn(dats['pid'], 'Lig' )
@@ -199,7 +212,7 @@ def GotWebsocketData( thing, data ):
         print "No operation found for " + str(data);
 
     if dats['op'] == 'getall':
-       thing.send( json.dumps( AllSprites ) );
+       thing.send( json.dumps( AllSprites) );
        return;
     elif dats['op'] == 'makeMove':
         #calculate new location of the players move
