@@ -65,10 +65,10 @@ def sanitize(someString):
   if (type(someString) == type("string")):
          #and then only if its longer than 15 char
           if (len(str((someString))) >15):
-            newName = str(someString)[0:15].replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+            newName = str(someString)[0:15].replace("&", "").replace('"', "").replace("<", "").replace(">", "")
           else:
           #otherwise only sanitize the input
-            newName = str(someString).replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+            newName = str(someString).replacereplace("&", "").replace('"', "").replace("<", "").replace(">", "")
   return newName
 
 def StartGame():
